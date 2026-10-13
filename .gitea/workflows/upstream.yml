@@ -9,6 +9,9 @@ name: Upstream
 # It writes the forge with gitea.token and reaches GitHub outbound.
 
 on:
+  # Drupack's daily release is published by 07:45 UTC.
+  schedule:
+    - cron: '17 9 * * *'
   workflow_dispatch:
     inputs:
       release:

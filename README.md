@@ -15,7 +15,19 @@ curl -fsSL https://github.com/tresbientech/drupacked-demo/releases/latest/downlo
 ./drupacked-demo
 ```
 
-A release holds Linux builds for amd64 and arm64, each for glibc and musl.
+On Windows, in PowerShell:
+
+```powershell
+irm https://github.com/tresbientech/drupacked-demo/releases/latest/download/install-drupacked-demo.ps1 | iex
+.\drupacked-demo.exe
+```
+
+A release holds these builds:
+
+- Linux amd64 and arm64, each for glibc and musl
+- macOS arm64 and amd64
+- Windows amd64
+
 [Drupack's README](https://github.com/tresbientech/drupack#readme) covers what
 the executable does once it runs.
 
@@ -49,7 +61,8 @@ docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/site" -w /site \
 ## Release
 
 The repository is canonical on a Gitea forge and mirrored to GitHub.
-`.gitea/workflows/upstream.yml` cuts every release there:
+`.gitea/workflows/upstream.yml` cuts every release there, each day at 09:17 UTC
+and on dispatch:
 
 1. `build/upstream.py` moves each pin to its newest version inside its line.
 2. The job commits the bump to a candidate branch and pushes it to GitHub.
