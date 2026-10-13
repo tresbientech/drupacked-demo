@@ -1,0 +1,7 @@
+# composer install writes these three. The site's own recipe sits among the
+# recipes Composer installs.
+/vendor/
+/web/
+/recipes/*
+!/recipes/drupacked_demo_site/
+__pycache__/
