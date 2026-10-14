@@ -50,12 +50,13 @@ them and publishes a release. A dispatch of the same workflow builds and tests
 a branch, and publishes nothing.
 
 A local build is one command in Drupack's job image, with `VERSION` the Drupack tag
-`.github/workflows/build.yml` names:
+`.github/workflows/build.yml` names. It packs the Linux targets alone, so
+`--platform` names them:
 
 ```sh
 docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/site" -w /site \
     ghcr.io/tresbientech/drupack-build:VERSION \
-    drupack-build --site . --output dist
+    drupack-build --site . --platform linux-amd64 --output dist
 ```
 
 ## Release
@@ -97,6 +98,21 @@ python3 -m unittest discover -s build  # the bumper's tests
 A site on GitHub alone can use Renovate in place of this script.
 [Drupack's guide](https://github.com/tresbientech/drupack/blob/main/docs/build-your-site.md#keeping-the-pins-current)
 gives its configuration.
+
+## WordPal's patches
+
+The demo carries WordPal's Display Builder target, not installed. `patches/`
+holds the patches WordPal's usage guide names, copied from WordPal's `patches`
+directory:
+
+- four for Display Builder and UI Patterns, which the Display Builder target needs
+- one for Canvas, which shows each layer's label in the Layers panel
+
+composer-patches applies them, and `patches.lock.json` records each one's
+SHA-256. Patches that dependencies declare stay unapplied.
+
+When WordPal changes its patches, copy them again and run
+`composer patches-relock`.
 
 ## License
 
