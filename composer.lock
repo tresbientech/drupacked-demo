@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7253213d1f7e025400d2c19503e2109c",
+    "content-hash": "d1710e1709225b65a8e444615f324590",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7220,17 +7220,17 @@
         },
         {
             "name": "drupal/wordpal",
-            "version": "1.0.0-alpha7",
+            "version": "1.0.0-alpha8",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/wordpal.git",
-                "reference": "1.0.0-alpha7"
+                "reference": "1.0.0-alpha8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/wordpal-1.0.0-alpha7.zip",
-                "reference": "1.0.0-alpha7",
-                "shasum": "12b0866267ca5da847b0ce216f7a6eaf82d6f569"
+                "url": "https://ftp.drupal.org/files/projects/wordpal-1.0.0-alpha8.zip",
+                "reference": "1.0.0-alpha8",
+                "shasum": "0e8f86a570e07e2c54eb92768b03c51f0ff6e91a"
             },
             "require": {
                 "drupal/core": "^11.4",
@@ -7260,6 +7260,7 @@
                 "drupal/wordpal_display_builder": "*",
                 "drupal/wordpal_display_builder_runtime": "*",
                 "drupal/wordpal_evaluate": "*",
+                "drupal/wordpal_update": "*",
                 "drush/drush": "^13"
             },
             "suggest": {
@@ -7273,8 +7274,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-alpha7",
-                    "datestamp": "1791798218",
+                    "version": "1.0.0-alpha8",
+                    "datestamp": "1792129342",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Alpha releases are not covered by Drupal security advisories."
@@ -7344,7 +7345,7 @@
                     "homepage": "https://www.drupal.org/user/1868952"
                 },
                 {
-                    "name": "Open Social",
+                    "name": "open social",
                     "homepage": "https://www.drupal.org/user/272162"
                 }
             ],
