@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1710e1709225b65a8e444615f324590",
+    "content-hash": "a40772eceeedfc526d6052a510395488",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1862,26 +1862,26 @@
         },
         {
             "name": "drupal/agent_access",
-            "version": "1.0.0-alpha2",
+            "version": "1.0.0-alpha3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/agent_access.git",
-                "reference": "ee58666de91472c8078ad5084b5003c8ca241a9a"
+                "reference": "c454af6eab3dec4dfd1c0c8e4726f235e2377217"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fagent_access/repository/archive.zip?sha=ee58666de91472c8078ad5084b5003c8ca241a9a",
-                "reference": "ee58666de91472c8078ad5084b5003c8ca241a9a",
+                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fagent_access/repository/archive.zip?sha=c454af6eab3dec4dfd1c0c8e4726f235e2377217",
+                "reference": "c454af6eab3dec4dfd1c0c8e4726f235e2377217",
                 "shasum": ""
             },
             "require": {
                 "drupal/core": "^11.4",
-                "drupal/mcp_server": "^2.0.0-beta5",
+                "drupal/mcp_server": "^2.0.0-beta6",
                 "drupal/mcp_server_oauth-mcp_server_oauth": "^1.0@alpha",
                 "drupal/mcp_server_tool_bridge": "^1.0.0-beta3@beta",
                 "drupal/simple_oauth": "^6.1",
-                "drupal/tool": "^1.0@beta",
-                "drupal/tool_belt": "^1.0@alpha",
+                "drupal/tool": "^1.0.0-beta11@beta",
+                "drupal/tool_belt": "^1.0.0-alpha6@alpha",
                 "e0ipso/simple_oauth_21": "^1.13"
             },
             "type": "drupal-recipe",
@@ -1891,9 +1891,9 @@
             ],
             "description": "Drupal-side connectivity and authorization for external AI agents through existing user accounts; this implementation assembles MCP + OAuth.",
             "support": {
-                "source": "https://git.drupalcode.org/project/agent_access/-/tree/1.0.0-alpha2"
+                "source": "https://git.drupalcode.org/project/agent_access/-/tree/1.0.0-alpha3"
             },
-            "time": "2026-09-23T15:56:09+00:00"
+            "time": "2026-10-16T09:55:06+00:00"
         },
         {
             "name": "drupal/automatic_updates",
@@ -4933,7 +4933,7 @@
             "extra": {
                 "drupal": {
                     "version": "2.0.0-beta6",
-                    "datestamp": "1792004960",
+                    "datestamp": "1792159404",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -8626,20 +8626,21 @@
         },
         {
             "name": "league/uri",
-            "version": "7.8.1",
+            "version": "7.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri.git",
-                "reference": "08cf38e3924d4f56238125547b5720496fac8fd4"
+                "reference": "fcc872a3d872aa13f935e0cd1887b9abb06da07f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri/zipball/08cf38e3924d4f56238125547b5720496fac8fd4",
-                "reference": "08cf38e3924d4f56238125547b5720496fac8fd4",
+                "url": "https://api.github.com/repos/thephpleague/uri/zipball/fcc872a3d872aa13f935e0cd1887b9abb06da07f",
+                "reference": "fcc872a3d872aa13f935e0cd1887b9abb06da07f",
                 "shasum": ""
             },
             "require": {
-                "league/uri-interfaces": "^7.8.1",
+                "ext-mbstring": "*",
+                "league/uri-interfaces": "^7.9.0",
                 "php": "^8.1",
                 "psr/http-factory": "^1"
             },
@@ -8712,7 +8713,7 @@
                 "docs": "https://uri.thephpleague.com",
                 "forum": "https://thephpleague.slack.com",
                 "issues": "https://github.com/thephpleague/uri-src/issues",
-                "source": "https://github.com/thephpleague/uri/tree/7.8.1"
+                "source": "https://github.com/thephpleague/uri/tree/7.9.0"
             },
             "funding": [
                 {
@@ -8720,20 +8721,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-15T20:22:25+00:00"
+            "time": "2026-10-16T15:19:33+00:00"
         },
         {
             "name": "league/uri-interfaces",
-            "version": "7.8.1",
+            "version": "7.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-interfaces.git",
-                "reference": "85d5c77c5d6d3af6c54db4a78246364908f3c928"
+                "reference": "eb5f6d24e6a4fe0a8e9c78ded4eb1dfff1404f58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/85d5c77c5d6d3af6c54db4a78246364908f3c928",
-                "reference": "85d5c77c5d6d3af6c54db4a78246364908f3c928",
+                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/eb5f6d24e6a4fe0a8e9c78ded4eb1dfff1404f58",
+                "reference": "eb5f6d24e6a4fe0a8e9c78ded4eb1dfff1404f58",
                 "shasum": ""
             },
             "require": {
@@ -8796,7 +8797,7 @@
                 "docs": "https://uri.thephpleague.com",
                 "forum": "https://thephpleague.slack.com",
                 "issues": "https://github.com/thephpleague/uri-src/issues",
-                "source": "https://github.com/thephpleague/uri-interfaces/tree/7.8.1"
+                "source": "https://github.com/thephpleague/uri-interfaces/tree/7.9.0"
             },
             "funding": [
                 {
@@ -8804,7 +8805,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-08T20:05:35+00:00"
+            "time": "2026-10-16T15:19:33+00:00"
         },
         {
             "name": "marc-mabe/php-enum",

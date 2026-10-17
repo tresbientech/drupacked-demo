@@ -11,7 +11,7 @@
         "ext-pdo_sqlite": "*",
         "composer/installers": "^2.3",
         "cweagans/composer-patches": "2.0.0",
-        "drupal/agent_access": "1.0.0-alpha2",
+        "drupal/agent_access": "1.0.0-alpha3",
         "drupal/canvas": "1.12.0",
         "drupal/core-composer-scaffold": "^11.4",
         "drupal/core-project-message": "^11.4",
