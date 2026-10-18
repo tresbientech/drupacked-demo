@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a40772eceeedfc526d6052a510395488",
+    "content-hash": "e2060a66e1bba7f4de4dcd4ca06839e3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7220,17 +7220,17 @@
         },
         {
             "name": "drupal/wordpal",
-            "version": "1.0.0-alpha8",
+            "version": "1.0.0-alpha9",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/wordpal.git",
-                "reference": "1.0.0-alpha8"
+                "reference": "1.0.0-alpha9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/wordpal-1.0.0-alpha8.zip",
-                "reference": "1.0.0-alpha8",
-                "shasum": "0e8f86a570e07e2c54eb92768b03c51f0ff6e91a"
+                "url": "https://ftp.drupal.org/files/projects/wordpal-1.0.0-alpha9.zip",
+                "reference": "1.0.0-alpha9",
+                "shasum": "8a4cd8338fe36c1515e5aeaab792c1663a1347ae"
             },
             "require": {
                 "drupal/core": "^11.4",
@@ -7274,8 +7274,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-alpha8",
-                    "datestamp": "1792129342",
+                    "version": "1.0.0-alpha9",
+                    "datestamp": "1792255438",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Alpha releases are not covered by Drupal security advisories."
@@ -8025,16 +8025,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.13.1",
+            "version": "2.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "95e7828100de18b4e269fb1703be530082d5166d"
+                "reference": "adee536f95101929f262b8c59e8a61472f347d58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/95e7828100de18b4e269fb1703be530082d5166d",
-                "reference": "95e7828100de18b4e269fb1703be530082d5166d",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/adee536f95101929f262b8c59e8a61472f347d58",
+                "reference": "adee536f95101929f262b8c59e8a61472f347d58",
                 "shasum": ""
             },
             "require": {
@@ -8124,7 +8124,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.13.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.13.2"
             },
             "funding": [
                 {
@@ -8140,7 +8140,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-24T09:13:11+00:00"
+            "time": "2026-10-17T23:49:46+00:00"
         },
         {
             "name": "html2text/html2text",
