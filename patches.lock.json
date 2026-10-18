@@ -1,5 +1,5 @@
 {
-    "_hash": "2ca5c7730aeded22621122fe0cdb9ccc207060cb51bf975258eab0ed0092b666",
+    "_hash": "0b6685db032e4a7fa04fd88f26e086c0039fd286bcf5def797b84a6e2732138e",
     "patches": {
         "drupal/canvas": [
             {
@@ -39,6 +39,16 @@
                 "description": "Accept and show a node label",
                 "url": "patches/display_builder-node-label.patch",
                 "sha256": "6e25e6c6d606acb938935688b802c561e616e73a6deb3a8337e27c5a9705cfa4",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            },
+            {
+                "package": "drupal/display_builder",
+                "description": "Relay builder changes through a Mercure hub",
+                "url": "patches/display_builder-mercure-hub.patch",
+                "sha256": "de91aa0eba7cd956adebe4d26bdb4161afbbd1ad1686aec68a0eefd53ac43677",
                 "depth": 1,
                 "extra": {
                     "provenance": "root"

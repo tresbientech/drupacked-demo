@@ -31,7 +31,9 @@
         "drupal/ui_skins": "1.2.1",
         "drupal/wordpal": "1.0.0-alpha9",
         "drush/drush": "^13.6",
-        "twig/twig": "3.29.0"
+        "symfony/mercure": "^0.9",
+        "twig/twig": "3.29.0",
+        "web-token/jwt-library": "^4.2"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -50,6 +52,7 @@
         "optimize-autoloader": true
     },
     "extra": {
+        "drupack": {"mercure": true},
         "composer-patches": {
             "disable-resolvers": ["\\cweagans\\Composer\\Resolver\\Dependencies"]
         },
@@ -60,7 +63,8 @@
             "drupal/display_builder": {
                 "Inject UI Patterns component manager": "patches/display_builder-ui-patterns-component-manager.patch",
                 "Declare the placeholder props schema": "patches/display_builder-placeholder-props-schema.patch",
-                "Accept and show a node label": "patches/display_builder-node-label.patch"
+                "Accept and show a node label": "patches/display_builder-node-label.patch",
+                "Relay builder changes through a Mercure hub": "patches/display_builder-mercure-hub.patch"
             },
             "drupal/ui_patterns": {
                 "Keep a zero string prop value": "patches/ui_patterns-zero-prop-value.patch"

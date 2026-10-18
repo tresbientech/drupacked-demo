@@ -1,0 +1,686 @@
+diff --git a/components/display_builder/display_builder.component.yml b/components/display_builder/display_builder.component.yml
+index b677264..65fccca 100644
+--- a/components/display_builder/display_builder.component.yml
++++ b/components/display_builder/display_builder.component.yml
+@@ -29,6 +29,14 @@ props:
+     buildable_id:
+       title: HTML ID
+       $ref: ui-patterns://identifier
++    refresh_url:
++      title: Refresh URL
++      description: The route a hub notice fetches the islands from, when a Mercure hub is configured.
++      type: string
++    refresh_event:
++      title: Refresh event
++      description: The type of the hub notice.
++      type: string
+ libraryOverrides:
+   js:
+     js/display_builder.js: {}
+diff --git a/components/display_builder/display_builder.twig b/components/display_builder/display_builder.twig
+index 8e6c4e1..271a9ad 100644
+--- a/components/display_builder/display_builder.twig
++++ b/components/display_builder/display_builder.twig
+@@ -81,6 +81,13 @@
+   {# Library preview on hover. @see components/display_builder/js/preview.js #}
+   <div id="preview-{{ builder_id }}" class="db-background db-preview" role="tooltip" hidden></div>
+ 
++  {# With a Mercure hub, the stream carries an empty notice per change, and this
++     fetches the islands this session has not seen: an out-of-band swap to each
++     island's pane. @see \Drupal\display_builder\MercureHub #}
++  {% if refresh_url %}
++    <div data-hx-get="{{ refresh_url }}" data-hx-trigger="sse:{{ refresh_event }}" data-hx-swap="none" hidden></div>
++  {% endif %}
++
+   {# Toast stack, outside the scrolling main area so it stays pinned.
+      @see \Drupal\display_builder\RenderableBuilderTrait::buildError() #}
+   <div id="message-{{ builder_id }}" class="db-messages" role="status" aria-live="polite"></div>
+diff --git a/composer.json b/composer.json
+index b7169e4..746cc42 100644
+--- a/composer.json
++++ b/composer.json
+@@ -22,7 +22,9 @@
+     "type": "drupal-module",
+     "require": {
+         "php": ">=8.3",
+-        "drupal/ui_patterns": "^2.0.21"
++        "drupal/ui_patterns": "^2.0.21",
++        "symfony/mercure": "^0.9",
++        "web-token/jwt-library": "^4.2"
+     },
+     "require-dev": {
+         "drupal/sdc_devel": "^1.0.3",
+diff --git a/display_builder.routing.yml b/display_builder.routing.yml
+index 019e93c..e552732 100644
+--- a/display_builder.routing.yml
++++ b/display_builder.routing.yml
+@@ -234,6 +234,21 @@ display_builder.api_sse:
+       display_builder_instance:
+         type: 'entity:display_builder_instance'
+ 
++# The islands a session fetches when the Mercure hub announces a change.
++# @see \Drupal\display_builder\MercureHub
++display_builder.api_refresh:
++  path: '/api/display-builder/{display_builder_instance}/refresh'
++  methods: [GET]
++  defaults:
++    _controller: '\Drupal\display_builder\Controller\ApiSseController::refresh'
++  requirements:
++    _entity_access: 'display_builder_instance.view'
++  options:
++    _admin_route: true
++    parameters:
++      display_builder_instance:
++        type: 'entity:display_builder_instance'
++
+ # Display Builder preview API.
+ display_builder.api_component_preview:
+   path: '/api/display-builder/component/{component_id}/preview/{variant_id}'
+diff --git a/display_builder.services.yml b/display_builder.services.yml
+index 6ec9b24..0f65f55 100644
+--- a/display_builder.services.yml
++++ b/display_builder.services.yml
+@@ -35,8 +35,20 @@ services:
+     arguments:
+       - '@tempstore.shared'
+       - '@datetime.time'
++      - '@display_builder.mercure_hub'
+   Drupal\display_builder\SseState: '@display_builder.sse_state'
+ 
++  display_builder.mercure_hub:
++    class: Drupal\display_builder\MercureHub
++    factory: ['Drupal\display_builder\MercureHub', 'fromSettings']
++    arguments:
++      - '@logger.channel.display_builder'
++  Drupal\display_builder\MercureHub: '@display_builder.mercure_hub'
++
++  logger.channel.display_builder:
++    parent: logger.channel_base
++    arguments: ['display_builder']
++
+   display_builder.event_subscriber:
+     class: '\Drupal\display_builder\Event\DisplayBuilderEventsSubscriber'
+     arguments:
+diff --git a/src/Controller/ApiSseController.php b/src/Controller/ApiSseController.php
+index 0b5c380..029bc45 100644
+--- a/src/Controller/ApiSseController.php
++++ b/src/Controller/ApiSseController.php
+@@ -7,6 +7,7 @@ namespace Drupal\display_builder\Controller;
+ use Drupal\display_builder\Event\DisplayBuilderEvents;
+ use Drupal\display_builder\InstanceInterface;
+ use Drupal\display_builder\Render\KeepSessionOpenEventStreamResponse;
++use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\HttpFoundation\ServerEvent;
+ 
+ /**
+@@ -61,60 +62,7 @@ class ApiSseController extends ApiControllerBase {
+         // waiting for a real event to occur.
+         yield new ServerEvent('');
+ 
+-        // Nothing to relay when there is no recorded change, when this session
+-        // already has it on screen (its own htmx request answered it with
+-        // out-of-band swaps), or when it is old enough that the builder has
+-        // been refreshed by other means. A change recorded by a writer outside
+-        // the htmx cycle - an AI agent, a queue worker - belongs to no session
+-        // and is relayed to everyone, including whoever asked for it.
+-        // Session ID handles different users, and the same user in different
+-        // browsers. Not handled: several tabs, same user, same browser.
+-        if (!$this->sseState->shouldRelay($this->sseState->readLatest($builder_id), $sessionId, $this::STALE)) {
+-          \sleep($this::REFRESH_WINDOW);
+-
+-          continue;
+-        }
+-
+-        // Reload the instance to ensure we get the builder's latest
+-        // state.
+-        $builder = $this->entityTypeManager()->getStorage('display_builder_instance')
+-          ->loadUnchanged($builder_id);
+-
+-        if (!$builder instanceof InstanceInterface) {
+-          \sleep($this::REFRESH_WINDOW);
+-
+-          continue;
+-        }
+-        $this->builder = $builder;
+-
+-        // Recompute islands regarding the current user.
+-        // Use ON_HISTORY_CHANGE because it is the event where most islands are
+-        // updated.
+-        $event = $this->createEventWithEnabledIsland(
+-          DisplayBuilderEvents::ON_HISTORY_CHANGE,
+-          $builder->getSources(),
+-          NULL,
+-          NULL,
+-        );
+-
+-        foreach ($event->getResult() as $island_id => $result) {
+-          // Do nothing if the island is not updated.
+-          if (empty($result)) {
+-            continue;
+-          }
+-
+-          // Do nothing if the island is empty.
+-          if (!isset($result['content'])) {
+-            continue;
+-          }
+-
+-          $sse_target = "island-{$builder->id()}-{$island_id}";
+-          $data = $this->renderer->renderInIsolation($result['content']);
+-
+-          // Need to send the data back as one line.
+-          // @see https://www.reddit.com/r/htmx/comments/1mjhzl1/comment/n7bdf0s
+-          $data = \str_replace(["\r\n", "\r", "\n"], ' ', (string) $data);
+-
++        foreach ($this->relay($builder_id, $sessionId) as $sse_target => $data) {
+           yield new ServerEvent($data, type: $sse_target);
+         }
+ 
+@@ -123,4 +71,101 @@ class ApiSseController extends ApiControllerBase {
+     });
+   }
+ 
++  /**
++   * Answers a hub notice with the islands this session has not seen.
++   *
++   * A builder subscribed to the Mercure hub fetches this on each notice. It
++   * runs one pass of the stream's loop for the caller's session, and wraps
++   * each island in an out-of-band swap to its own pane.
++   *
++   * @param \Drupal\display_builder\InstanceInterface $display_builder_instance
++   *   Display builder instance.
++   *
++   * @return \Symfony\Component\HttpFoundation\Response
++   *   The islands' out-of-band swaps, or an empty body when nothing is new.
++   *
++   * @see \Drupal\display_builder\MercureHub
++   */
++  public function refresh(InstanceInterface $display_builder_instance): Response {
++    $swaps = '';
++    foreach ($this->relay((string) $display_builder_instance->id(), $this->session->getId()) as $sse_target => $data) {
++      $swaps .= \sprintf('<div data-hx-swap-oob="innerHTML:#%s">%s</div>', $sse_target, $data);
++    }
++
++    return new Response($swaps, Response::HTTP_OK, [
++      'Content-Type' => 'text/html; charset=UTF-8',
++      'Cache-Control' => 'no-store',
++    ]);
++  }
++
++  /**
++   * Renders the islands a session needs after another session's change.
++   *
++   * @param string $builder_id
++   *   The display_builder_instance entity ID.
++   * @param string $sessionId
++   *   The session asking.
++   *
++   * @return string[]
++   *   Each updated island's content on one line, keyed by its pane's HTML ID.
++   *   Empty when there is nothing to relay to this session.
++   */
++  private function relay(string $builder_id, string $sessionId): array {
++    // Nothing to relay when there is no recorded change, when this session
++    // already has it on screen (its own htmx request answered it with
++    // out-of-band swaps), or when it is old enough that the builder has
++    // been refreshed by other means. A change recorded by a writer outside
++    // the htmx cycle - an AI agent, a queue worker - belongs to no session
++    // and is relayed to everyone, including whoever asked for it.
++    // Session ID handles different users, and the same user in different
++    // browsers. Not handled: several tabs, same user, same browser.
++    if (!$this->sseState->shouldRelay($this->sseState->readLatest($builder_id), $sessionId, $this::STALE)) {
++      return [];
++    }
++
++    // Reload the instance to ensure we get the builder's latest
++    // state.
++    $builder = $this->entityTypeManager()->getStorage('display_builder_instance')
++      ->loadUnchanged($builder_id);
++
++    if (!$builder instanceof InstanceInterface) {
++      return [];
++    }
++    $this->builder = $builder;
++
++    // Recompute islands regarding the current user.
++    // Use ON_HISTORY_CHANGE because it is the event where most islands are
++    // updated.
++    $event = $this->createEventWithEnabledIsland(
++      DisplayBuilderEvents::ON_HISTORY_CHANGE,
++      $builder->getSources(),
++      NULL,
++      NULL,
++    );
++
++    $islands = [];
++    foreach ($event->getResult() as $island_id => $result) {
++      // Do nothing if the island is not updated.
++      if (empty($result)) {
++        continue;
++      }
++
++      // Do nothing if the island is empty.
++      if (!isset($result['content'])) {
++        continue;
++      }
++
++      $sse_target = "island-{$builder->id()}-{$island_id}";
++      $data = $this->renderer->renderInIsolation($result['content']);
++
++      // Need to send the data back as one line.
++      // @see https://www.reddit.com/r/htmx/comments/1mjhzl1/comment/n7bdf0s
++      $data = \str_replace(["\r\n", "\r", "\n"], ' ', (string) $data);
++
++      $islands[$sse_target] = $data;
++    }
++
++    return $islands;
++  }
++
+ }
+diff --git a/src/MercureHub.php b/src/MercureHub.php
+new file mode 100644
+index 0000000..1aad380
+--- /dev/null
++++ b/src/MercureHub.php
+@@ -0,0 +1,293 @@
++<?php
++
++declare(strict_types=1);
++
++namespace Drupal\display_builder;
++
++use Drupal\Core\Site\Settings;
++use Psr\Log\LoggerInterface;
++use Symfony\Component\HttpFoundation\Cookie;
++use Symfony\Component\Mercure\Hub;
++use Symfony\Component\Mercure\Jwt\Grant;
++use Symfony\Component\Mercure\Jwt\StaticTokenProvider;
++use Symfony\Component\Mercure\Jwt\WebTokenFactory;
++use Symfony\Component\Mercure\ProtocolVersion;
++use Symfony\Component\Mercure\Update;
++use Symfony\Component\Mercure\Exception\RuntimeException as MercureException;
++use Symfony\Contracts\HttpClient\HttpClientInterface;
++
++/**
++ * The Mercure hub that tells open builders an instance changed.
++ *
++ * With a hub, a change publishes an empty "changed" update on the instance's
++ * topic, and each open builder fetches its own islands from the refresh route.
++ * No PHP worker waits per open builder. Without a hub, the builder streams from
++ * the SSE route as before.
++ *
++ * The hub is named in settings.php:
++ *
++ * @code
++ * $settings['display_builder_mercure'] = [
++ *   'url' => 'https://example.com/.well-known/mercure',
++ *   'publisher_secret' => '...',
++ *   'subscriber_secret' => '...',
++ *   // Optional. Defaults to the hub's protocol 1.0 name over https, and to
++ *   // mercure_access_token over plain http.
++ *   'cookie_name' => '...',
++ * ];
++ * @endcode
++ *
++ * When that setting is absent, the hub a Drupack start serves is used, from
++ * DRUPACK_MERCURE_URL, DRUPACK_MERCURE_PUBLISHER_SECRET and
++ * DRUPACK_MERCURE_SUBSCRIBER_SECRET.
++ *
++ * Tokens follow Mercure protocol 1.0: the hub URL is both their issuer and
++ * their audience, and each grants one action on one instance's topic.
++ *
++ * @see \Drupal\display_builder\Controller\ApiSseController::refresh()
++ */
++final class MercureHub {
++
++  /**
++   * The settings.php key that names the hub.
++   */
++  public const string SETTING = 'display_builder_mercure';
++
++  /**
++   * The type of the update a change publishes.
++   */
++  public const string EVENT = 'changed';
++
++  /**
++   * The cookie name a hub served over plain http reads.
++   *
++   * Browsers drop a "__Secure-" cookie set over http, the protocol 1.0 default.
++   */
++  public const string HTTP_COOKIE_NAME = 'mercure_access_token';
++
++  /**
++   * The client and subject every token names. This module issues them all.
++   */
++  private const string CLIENT_ID = 'display_builder';
++
++  /**
++   * Seconds a publisher token stays valid. One publish uses it.
++   */
++  private const int PUBLISHER_TOKEN_LIFETIME = 60;
++
++  /**
++   * The hub settings, or NULL when no hub is configured.
++   *
++   * @var array{url: non-empty-string, publisher_secret: non-empty-string, subscriber_secret: non-empty-string, cookie_name: string}|null
++   */
++  private readonly ?array $hub;
++
++  /**
++   * Builds the service over a hub's settings.
++   *
++   * @param \Psr\Log\LoggerInterface $logger
++   *   Records a notice the hub refused.
++   * @param array|null $hub
++   *   The url, publisher_secret, subscriber_secret and optional cookie_name of
++   *   the hub, or NULL for no hub.
++   * @param \Symfony\Contracts\HttpClient\HttpClientInterface|null $httpClient
++   *   The client that publishes, or NULL for Symfony's default one.
++   */
++  public function __construct(
++    private readonly LoggerInterface $logger,
++    ?array $hub,
++    private readonly ?HttpClientInterface $httpClient = NULL,
++  ) {
++    $this->hub = $hub === NULL ? NULL : self::complete($hub);
++  }
++
++  /**
++   * Builds the service over the hub settings.php or Drupack names.
++   *
++   * @param \Psr\Log\LoggerInterface $logger
++   *   Records a notice the hub refused.
++   *
++   * @return self
++   *   The service, with or without a hub.
++   */
++  public static function fromSettings(LoggerInterface $logger): self {
++    return new self($logger, self::fromSettingsOrEnvironment());
++  }
++
++  /**
++   * Whether a hub is configured.
++   */
++  public function isConfigured(): bool {
++    return $this->hub !== NULL;
++  }
++
++  /**
++   * The topic of an instance.
++   *
++   * A URN rather than a URL: drush and a browser request build different
++   * absolute URLs for one route, and both must name the same topic.
++   *
++   * @param string $instance_id
++   *   The display_builder_instance entity ID.
++   *
++   * @return string
++   *   The topic.
++   */
++  public static function topic(string $instance_id): string {
++    return 'urn:display-builder:instance:' . $instance_id;
++  }
++
++  /**
++   * Tells every open builder of an instance that it changed.
++   *
++   * A hub that does not answer loses the notice and fails nothing: the change
++   * is saved, and the next notice or reload shows it.
++   *
++   * @param string $instance_id
++   *   The display_builder_instance entity ID.
++   */
++  public function publishChanged(string $instance_id): void {
++    if ($this->hub === NULL) {
++      return;
++    }
++    $topic = self::topic($instance_id);
++    $token = $this->token($this->hub['publisher_secret'], Grant::ACTION_PUBLISH, $topic, self::PUBLISHER_TOKEN_LIFETIME);
++    $hub = new Hub($this->hub['url'], new StaticTokenProvider($token), httpClient: $this->httpClient, protocolVersion: ProtocolVersion::V1);
++
++    try {
++      $hub->publish(new Update($topic, '', TRUE, type: self::EVENT));
++    }
++    // The hub is a separate service, reached over HTTP.
++    catch (MercureException $exception) {
++      $this->logger->warning('The Mercure hub refused the change notice for @instance: @message', [
++        '@instance' => $instance_id,
++        '@message' => $exception->getMessage(),
++      ]);
++    }
++  }
++
++  /**
++   * The hub URL that streams an instance's notices.
++   *
++   * @param string $instance_id
++   *   The display_builder_instance entity ID.
++   *
++   * @return string
++   *   The hub URL with the instance's topic as its match parameter.
++   */
++  public function subscribeUrl(string $instance_id): string {
++    \assert($this->hub !== NULL);
++
++    return $this->hub['url'] . '?' . \http_build_query(['match' => self::topic($instance_id)]);
++  }
++
++  /**
++   * The cookie that lets a browser subscribe to one instance's topic.
++   *
++   * EventSource sends cookies and no Authorization header, so the token rides
++   * in an HttpOnly cookie scoped to the hub's path.
++   *
++   * @param string $instance_id
++   *   The display_builder_instance entity ID.
++   * @param int $lifetime
++   *   Seconds the cookie and its token stay valid.
++   *
++   * @return \Symfony\Component\HttpFoundation\Cookie
++   *   The cookie.
++   */
++  public function subscriberCookie(string $instance_id, int $lifetime): Cookie {
++    \assert($this->hub !== NULL);
++    $token = $this->token($this->hub['subscriber_secret'], Grant::ACTION_SUBSCRIBE, self::topic($instance_id), $lifetime);
++    $url = \parse_url($this->hub['url']);
++
++    return Cookie::create(
++      $this->hub['cookie_name'],
++      $token,
++      \time() + $lifetime,
++      $url['path'] ?? '/',
++      NULL,
++      ($url['scheme'] ?? '') === 'https',
++      TRUE,
++      FALSE,
++      Cookie::SAMESITE_STRICT,
++    );
++  }
++
++  /**
++   * Signs a protocol 1.0 token for one action on one topic.
++   *
++   * @param non-empty-string $secret
++   *   The HS256 secret of the action.
++   * @param string $action
++   *   Grant::ACTION_PUBLISH or Grant::ACTION_SUBSCRIBE.
++   * @param string $topic
++   *   The topic the token grants.
++   * @param int $lifetime
++   *   Seconds the token stays valid.
++   *
++   * @return string
++   *   The token, in compact serialization.
++   */
++  private function token(string $secret, string $action, string $topic, int $lifetime): string {
++    \assert($this->hub !== NULL);
++
++    return WebTokenFactory::fromSecret($secret, jwtLifetime: $lifetime)->create(
++      [new Grant([$action], [$topic])],
++      [
++        'iss' => $this->hub['url'],
++        'aud' => $this->hub['url'],
++        'sub' => self::CLIENT_ID,
++        'client_id' => self::CLIENT_ID,
++      ],
++    );
++  }
++
++  /**
++   * Reads the hub from settings.php, or from a Drupack start's environment.
++   *
++   * @return array|null
++   *   The hub settings, or NULL when neither names a hub.
++   */
++  private static function fromSettingsOrEnvironment(): ?array {
++    $settings = Settings::get(self::SETTING);
++    if ($settings !== NULL) {
++      return $settings;
++    }
++    $environment = [
++      'url' => \getenv('DRUPACK_MERCURE_URL'),
++      'publisher_secret' => \getenv('DRUPACK_MERCURE_PUBLISHER_SECRET'),
++      'subscriber_secret' => \getenv('DRUPACK_MERCURE_SUBSCRIBER_SECRET'),
++    ];
++    // Drupack exports the three together, from a start that serves the hub.
++    return \in_array(FALSE, $environment, TRUE) ? NULL : $environment;
++  }
++
++  /**
++   * Checks a hub's settings and fills in its cookie name.
++   *
++   * @param array $hub
++   *   The hub settings.
++   *
++   * @return array{url: non-empty-string, publisher_secret: non-empty-string, subscriber_secret: non-empty-string, cookie_name: string}
++   *   The settings, with a cookie name.
++   *
++   * @throws \InvalidArgumentException
++   *   When a key is missing or empty.
++   */
++  private static function complete(array $hub): array {
++    $complete = [];
++    foreach (['url', 'publisher_secret', 'subscriber_secret'] as $key) {
++      $value = $hub[$key] ?? NULL;
++      if (!\is_string($value) || $value === '') {
++        throw new \InvalidArgumentException(\sprintf('The Mercure hub setting "%s" is missing.', $key));
++      }
++      $complete[$key] = $value;
++    }
++    $complete['cookie_name'] = (string) ($hub['cookie_name'] ?? (\str_starts_with($complete['url'], 'http://')
++      ? self::HTTP_COOKIE_NAME
++      : ProtocolVersion::V1->getDefaultCookieName()));
++
++    return $complete;
++  }
++
++}
+diff --git a/src/ProfileViewBuilder.php b/src/ProfileViewBuilder.php
+index 1ab8322..b864e1b 100644
+--- a/src/ProfileViewBuilder.php
++++ b/src/ProfileViewBuilder.php
+@@ -20,6 +20,7 @@ use Drupal\display_builder\Entity\ProfileInterface;
+ use Drupal\display_builder\Island\IslandInterface;
+ use Drupal\display_builder\Island\IslandPluginManagerInterface;
+ use Drupal\display_builder\Island\IslandType;
++use Drupal\display_builder\MercureHub;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ 
+ /**
+@@ -29,6 +30,14 @@ class ProfileViewBuilder extends EntityViewBuilder implements TrustedCallbackInt
+ 
+   use RenderableBuilderTrait;
+ 
++  /**
++   * Seconds a builder page's hub subscription stays valid: a working day.
++   *
++   * The hub closes the stream when the token expires, and a reload issues a
++   * new one.
++   */
++  private const int HUB_COOKIE_LIFETIME = 8 * 3600;
++
+   /**
+    * The entity we are building the view for.
+    */
+@@ -45,6 +54,7 @@ class ProfileViewBuilder extends EntityViewBuilder implements TrustedCallbackInt
+     EntityDisplayRepositoryInterface $entity_display_repository,
+     protected EntityTypeManagerInterface $entityTypeManager,
+     protected IslandPluginManagerInterface $islandPluginManager,
++    protected MercureHub $mercureHub,
+   ) {
+     parent::__construct($entity_type, $entity_repository, $language_manager, $theme_registry, $entity_display_repository);
+   }
+@@ -61,6 +71,7 @@ class ProfileViewBuilder extends EntityViewBuilder implements TrustedCallbackInt
+       $container->get('entity_display.repository'),
+       $container->get('entity_type.manager'),
+       $container->get('plugin.manager.db_island'),
++      $container->get('display_builder.mercure_hub'),
+     );
+   }
+ 
+@@ -141,12 +152,32 @@ class ProfileViewBuilder extends EntityViewBuilder implements TrustedCallbackInt
+       return $build;
+     }
+ 
+-    $build['#attributes']['sse-connect'] = Url::fromRoute(
+-      'display_builder.api_sse',
+-      ['display_builder_instance' => (string) $builder->id()],
+-    )->toString();
++    $builder_id = (string) $builder->id();
++    if ($this->mercureHub->isConfigured()) {
++      // The hub streams an empty notice per change, and the refresh route
++      // answers each with the islands this session has not seen.
++      $build['#attributes']['sse-connect'] = $this->mercureHub->subscribeUrl($builder_id);
++      $build['#props']['refresh_url'] = Url::fromRoute('display_builder.api_refresh', ['display_builder_instance' => $builder_id])->toString();
++      $build['#props']['refresh_event'] = MercureHub::EVENT;
++      $build['#attached']['http_header'][] = [
++        'Set-Cookie',
++        (string) $this->mercureHub->subscriberCookie($builder_id, self::HUB_COOKIE_LIFETIME),
++        FALSE,
++      ];
++    }
++    else {
++      $build['#attributes']['sse-connect'] = Url::fromRoute(
++        'display_builder.api_sse',
++        ['display_builder_instance' => $builder_id],
++      )->toString();
++    }
+     (new Htmx())->ext('sse')->applyTo($build);
+     $build['#attached']['library'][] = 'display_builder/htmx_sse';
++    // The page carries the subscriber cookie, so it is never cached. Set after
++    // applyTo(), which replaces the cache metadata.
++    if ($this->mercureHub->isConfigured()) {
++      $build['#cache']['max-age'] = 0;
++    }
+ 
+     return $build;
+   }
+diff --git a/src/SseState.php b/src/SseState.php
+index 3c54093..fc44ec0 100644
+--- a/src/SseState.php
++++ b/src/SseState.php
+@@ -13,6 +13,7 @@ use Drupal\Core\TempStore\SharedTempStoreFactory;
+  *
+  * One slot per instance, holding only the last change: the stream re-renders
+  * from the instance's current state anyway, so a queue would buy nothing.
++ * With a Mercure hub, recording a change also tells every open builder.
+  *
+  * @see \Drupal\display_builder\Controller\ApiSseController::sse()
+  */
+@@ -31,6 +32,7 @@ final class SseState {
+   public function __construct(
+     private readonly SharedTempStoreFactory $sharedTempStoreFactory,
+     private readonly TimeInterface $time,
++    private readonly MercureHub $mercureHub,
+   ) {}
+ 
+   /**
+@@ -57,6 +59,7 @@ final class SseState {
+       'timestamp' => $this->time->getCurrentTime(),
+       'instanceId' => $instance_id,
+     ]);
++    $this->mercureHub->publishChanged($instance_id);
+   }
+ 
+   /**
