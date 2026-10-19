@@ -79,6 +79,9 @@
             "web/modules/custom/{$name}": ["type:drupal-custom-module"],
             "web/themes/custom/{$name}": ["type:drupal-custom-theme"],
             "recipes/{$name}": ["type:drupal-recipe"]
+        },
+        "drupack": {
+            "subdomain": "demo"
         }
     }
 }
