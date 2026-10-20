@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55a4da9e632ae7fb3d471462494fa089",
+    "content-hash": "98ae2ca85ff4c32c64c34964840a4fc6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1798,16 +1798,16 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.6.0",
+            "version": "v3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "d61a8a9604ec1f8c3d150d09db6ce98b32675013"
+                "reference": "4189372ffeff09bf14f731f67a9de90c7b413ebe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/d61a8a9604ec1f8c3d150d09db6ce98b32675013",
-                "reference": "d61a8a9604ec1f8c3d150d09db6ce98b32675013",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/4189372ffeff09bf14f731f67a9de90c7b413ebe",
+                "reference": "4189372ffeff09bf14f731f67a9de90c7b413ebe",
                 "shasum": ""
             },
             "require": {
@@ -1818,8 +1818,8 @@
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^1.12.32|^2.1.31",
-                "phpunit/phpunit": "^8.5.48|^9.0"
+                "phpstan/phpstan": "^2.1.31",
+                "phpunit/phpunit": "^11.5.43 || ^12.4"
             },
             "type": "library",
             "extra": {
@@ -1850,7 +1850,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.6.0"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.6.1"
             },
             "funding": [
                 {
@@ -1858,7 +1858,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-31T18:51:33+00:00"
+            "time": "2026-10-19T17:53:57+00:00"
         },
         {
             "name": "drupal/agent_access",
@@ -3414,17 +3414,17 @@
         },
         {
             "name": "drupal/drupal_cms_helper",
-            "version": "2.2.5",
+            "version": "2.2.6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/drupal_cms_helper.git",
-                "reference": "2.2.5"
+                "reference": "2.2.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/drupal_cms_helper-2.2.5.zip",
-                "reference": "2.2.5",
-                "shasum": "d83a24ac86ce0dece81068be8d244b676b74f599"
+                "url": "https://ftp.drupal.org/files/projects/drupal_cms_helper-2.2.6.zip",
+                "reference": "2.2.6",
+                "shasum": "4b4f0922bf90bed88e240d058733ff3f330addb7"
             },
             "require": {
                 "davereid/drupal-environment": "^1.2",
@@ -3433,8 +3433,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.5",
-                    "datestamp": "1792035549",
+                    "version": "2.2.6",
+                    "datestamp": "1792430429",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3464,16 +3464,16 @@
         },
         {
             "name": "drupal/drupal_cms_installer",
-            "version": "2.2.5",
+            "version": "2.2.6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/drupal_cms_installer.git",
-                "reference": "f9df5b75300ae1b5ae66193e885d942d43ba42eb"
+                "reference": "3891ee40bb52669c47721dbfcd97033c4ad42bab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_installer/repository/archive.zip?sha=f9df5b75300ae1b5ae66193e885d942d43ba42eb",
-                "reference": "f9df5b75300ae1b5ae66193e885d942d43ba42eb",
+                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_installer/repository/archive.zip?sha=3891ee40bb52669c47721dbfcd97033c4ad42bab",
+                "reference": "3891ee40bb52669c47721dbfcd97033c4ad42bab",
                 "shasum": ""
             },
             "require": {
@@ -3488,9 +3488,9 @@
             ],
             "description": "Provides install-time tweaks for Drupal CMS. Not to be used in production.",
             "support": {
-                "source": "https://git.drupalcode.org/project/drupal_cms_installer/-/tree/2.2.5"
+                "source": "https://git.drupalcode.org/project/drupal_cms_installer/-/tree/2.2.6"
             },
-            "time": "2026-10-14T23:05:32+00:00"
+            "time": "2026-10-19T13:05:26+00:00"
         },
         {
             "name": "drupal/drupal_cms_search",
@@ -7220,17 +7220,17 @@
         },
         {
             "name": "drupal/wordpal",
-            "version": "1.0.0-alpha10",
+            "version": "1.0.0-alpha11",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/wordpal.git",
-                "reference": "1.0.0-alpha10"
+                "reference": "1.0.0-alpha11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/wordpal-1.0.0-alpha10.zip",
-                "reference": "1.0.0-alpha10",
-                "shasum": "19438c5e83994c779e20042023dafc37f6d4e9d2"
+                "url": "https://ftp.drupal.org/files/projects/wordpal-1.0.0-alpha11.zip",
+                "reference": "1.0.0-alpha11",
+                "shasum": "ca6664c10968497a7180cd883d9c1ca851f713df"
             },
             "require": {
                 "drupal/core": "^11.4",
@@ -7276,8 +7276,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-alpha10",
-                    "datestamp": "1792315309",
+                    "version": "1.0.0-alpha11",
+                    "datestamp": "1792412963",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Alpha releases are not covered by Drupal security advisories."
@@ -7622,16 +7622,16 @@
         },
         {
             "name": "enshrined/svg-sanitize",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/darylldoyle/svg-sanitizer.git",
-                "reference": "f3300fcd1bbf67d205b52217c75d0f7d6a8c47ff"
+                "reference": "9ba9001493f5da737759303f13bd965ebdaa778c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/f3300fcd1bbf67d205b52217c75d0f7d6a8c47ff",
-                "reference": "f3300fcd1bbf67d205b52217c75d0f7d6a8c47ff",
+                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/9ba9001493f5da737759303f13bd965ebdaa778c",
+                "reference": "9ba9001493f5da737759303f13bd965ebdaa778c",
                 "shasum": ""
             },
             "require": {
@@ -7661,9 +7661,9 @@
             "description": "An SVG sanitizer for PHP",
             "support": {
                 "issues": "https://github.com/darylldoyle/svg-sanitizer/issues",
-                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/1.0.0"
+                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/1.1.0"
             },
-            "time": "2026-09-01T09:35:47+00:00"
+            "time": "2026-10-19T12:01:32+00:00"
         },
         {
             "name": "goalgorilla/rtseo.js",
