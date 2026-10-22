@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98ae2ca85ff4c32c64c34964840a4fc6",
+    "content-hash": "ea0ce1e2ebf39017ca40de155018d5cd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -125,16 +125,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.14",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "0c8abba0634f637bd78c4e451981da368d403463"
+                "reference": "2c99cf2e92516985dea4914812b93d9daf01cdd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/0c8abba0634f637bd78c4e451981da368d403463",
-                "reference": "0c8abba0634f637bd78c4e451981da368d403463",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/2c99cf2e92516985dea4914812b93d9daf01cdd6",
+                "reference": "2c99cf2e92516985dea4914812b93d9daf01cdd6",
                 "shasum": ""
             },
             "require": {
@@ -181,7 +181,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.14"
+                "source": "https://github.com/composer/ca-bundle/tree/1.6.0"
             },
             "funding": [
                 {
@@ -193,7 +193,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-21T14:57:29+00:00"
+            "time": "2026-10-20T20:14:05+00:00"
         },
         {
             "name": "composer/class-map-generator",
@@ -1862,25 +1862,25 @@
         },
         {
             "name": "drupal/agent_access",
-            "version": "1.0.0-alpha3",
+            "version": "1.0.0-alpha4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/agent_access.git",
-                "reference": "c454af6eab3dec4dfd1c0c8e4726f235e2377217"
+                "reference": "9dce8b72efaf3dee52429929c2f36bd6462d01f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fagent_access/repository/archive.zip?sha=c454af6eab3dec4dfd1c0c8e4726f235e2377217",
-                "reference": "c454af6eab3dec4dfd1c0c8e4726f235e2377217",
+                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fagent_access/repository/archive.zip?sha=9dce8b72efaf3dee52429929c2f36bd6462d01f4",
+                "reference": "9dce8b72efaf3dee52429929c2f36bd6462d01f4",
                 "shasum": ""
             },
             "require": {
                 "drupal/core": "^11.4",
                 "drupal/mcp_server": "^2.0.0-beta6",
                 "drupal/mcp_server_oauth-mcp_server_oauth": "^1.0@alpha",
-                "drupal/mcp_server_tool_bridge": "^1.0.0-beta3@beta",
+                "drupal/mcp_server_tool_bridge": "^1.0.0-beta4@beta",
                 "drupal/simple_oauth": "^6.1",
-                "drupal/tool": "^1.0.0-beta11@beta",
+                "drupal/tool": "^1.0.0-beta12@beta",
                 "drupal/tool_belt": "^1.0.0-alpha6@alpha",
                 "e0ipso/simple_oauth_21": "^1.13"
             },
@@ -1891,9 +1891,9 @@
             ],
             "description": "Drupal-side connectivity and authorization for external AI agents through existing user accounts; this implementation assembles MCP + OAuth.",
             "support": {
-                "source": "https://git.drupalcode.org/project/agent_access/-/tree/1.0.0-alpha3"
+                "source": "https://git.drupalcode.org/project/agent_access/-/tree/1.0.0-alpha4"
             },
-            "time": "2026-10-16T09:55:06+00:00"
+            "time": "2026-10-20T19:08:43+00:00"
         },
         {
             "name": "drupal/automatic_updates",
@@ -2233,6 +2233,10 @@
                     "homepage": "https://www.drupal.org/user/3513671"
                 },
                 {
+                    "name": "harjot.singh@acquia.com",
+                    "homepage": "https://www.drupal.org/user/3871293"
+                },
+                {
                     "name": "hooroomoo",
                     "homepage": "https://www.drupal.org/user/3688872"
                 },
@@ -2562,16 +2566,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "11.4.10",
+            "version": "11.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "7dc54b5a0281efaf995a579f02a9b473424a9d09"
+                "reference": "50e8bbd254710de4bebff081d421400d4eb60998"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/7dc54b5a0281efaf995a579f02a9b473424a9d09",
-                "reference": "7dc54b5a0281efaf995a579f02a9b473424a9d09",
+                "url": "https://api.github.com/repos/drupal/core/zipball/50e8bbd254710de4bebff081d421400d4eb60998",
+                "reference": "50e8bbd254710de4bebff081d421400d4eb60998",
                 "shasum": ""
             },
             "require": {
@@ -2744,7 +2748,7 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "support": {
-                "source": "https://github.com/drupal/core/tree/11.4.10"
+                "source": "https://github.com/drupal/core/tree/11.4.11"
             },
             "funding": [
                 {
@@ -2752,11 +2756,11 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-10-14T10:58:06+00:00"
+            "time": "2026-10-21T10:18:50+00:00"
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "11.4.10",
+            "version": "11.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -2800,13 +2804,13 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/11.4.10"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/11.4.11"
             },
             "time": "2026-07-09T23:23:24+00:00"
         },
         {
             "name": "drupal/core-project-message",
-            "version": "11.4.10",
+            "version": "11.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-project-message.git",
@@ -2844,29 +2848,29 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-project-message/tree/11.4.10"
+                "source": "https://github.com/drupal/core-project-message/tree/11.5.0-beta1"
             },
             "time": "2026-01-07T19:00:53+00:00"
         },
         {
             "name": "drupal/core-recommended",
-            "version": "11.4.10",
+            "version": "11.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-recommended.git",
-                "reference": "79668dc2db00f10a4d22e80b9005fc8f5042bdfe"
+                "reference": "6955500ade3657e025482dcaa0e423025cfff2be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/79668dc2db00f10a4d22e80b9005fc8f5042bdfe",
-                "reference": "79668dc2db00f10a4d22e80b9005fc8f5042bdfe",
+                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/6955500ade3657e025482dcaa0e423025cfff2be",
+                "reference": "6955500ade3657e025482dcaa0e423025cfff2be",
                 "shasum": ""
             },
             "require": {
                 "asm89/stack-cors": "~v2.4.0",
                 "composer/semver": "~3.4.4",
                 "doctrine/lexer": "~3.0.1",
-                "drupal/core": "11.4.10",
+                "drupal/core": "11.4.11",
                 "egulias/email-validator": "~4.0.4",
                 "justinrainbow/json-schema": "~6.8.2",
                 "marc-mabe/php-enum": "~v4.7.2",
@@ -2886,13 +2890,13 @@
                 "revolt/event-loop": "~v1.0.9",
                 "symfony/console": "~v7.4.13",
                 "symfony/dependency-injection": "~v7.4.13",
-                "symfony/deprecation-contracts": "~v3.7.0",
+                "symfony/deprecation-contracts": "~v3.7.1",
                 "symfony/error-handler": "~v7.4.8",
                 "symfony/event-dispatcher": "~v7.4.9",
                 "symfony/event-dispatcher-contracts": "~v3.7.0",
                 "symfony/filesystem": "~v7.4.11",
                 "symfony/finder": "~v7.4.8",
-                "symfony/http-foundation": "~v7.4.13",
+                "symfony/http-foundation": "~v7.4.21",
                 "symfony/http-kernel": "~v7.4.13",
                 "symfony/mailer": "~v7.4.12",
                 "symfony/mime": "~v7.4.13",
@@ -2907,7 +2911,7 @@
                 "symfony/validator": "~v7.4.10",
                 "symfony/var-dumper": "~v7.4.8",
                 "symfony/var-exporter": "~v7.4.9",
-                "symfony/yaml": "~v7.4.13"
+                "symfony/yaml": "~v7.4.21"
             },
             "conflict": {
                 "webflo/drupal-core-strict": "*"
@@ -2924,13 +2928,13 @@
             ],
             "description": "Core and its dependencies with known-compatible minor versions. Require this project INSTEAD OF drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-recommended/tree/11.4.10"
+                "source": "https://github.com/drupal/core-recommended/tree/11.4.11"
             },
-            "time": "2026-10-14T10:58:06+00:00"
+            "time": "2026-10-21T10:18:50+00:00"
         },
         {
             "name": "drupal/core-vendor-hardening",
-            "version": "11.4.10",
+            "version": "11.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-vendor-hardening.git",
@@ -2968,7 +2972,7 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-vendor-hardening/tree/11.4.10"
+                "source": "https://github.com/drupal/core-vendor-hardening/tree/11.4.11"
             },
             "time": "2026-01-07T19:00:53+00:00"
         },
@@ -3494,16 +3498,16 @@
         },
         {
             "name": "drupal/drupal_cms_search",
-            "version": "2.2.4",
+            "version": "2.2.6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/drupal_cms_search.git",
-                "reference": "82624461a322e571364d00bff0e29ebc81d509ac"
+                "reference": "9a563f95ef5c273d5f3bee484ad2b28fbebb00a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_search/repository/archive.zip?sha=82624461a322e571364d00bff0e29ebc81d509ac",
-                "reference": "82624461a322e571364d00bff0e29ebc81d509ac",
+                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_search/repository/archive.zip?sha=9a563f95ef5c273d5f3bee484ad2b28fbebb00a3",
+                "reference": "9a563f95ef5c273d5f3bee484ad2b28fbebb00a3",
                 "shasum": ""
             },
             "require": {
@@ -3521,9 +3525,9 @@
             ],
             "description": "Adds a search to help visitors find content.",
             "support": {
-                "source": "https://git.drupalcode.org/project/drupal_cms_search/-/tree/2.2.4"
+                "source": "https://git.drupalcode.org/project/drupal_cms_search/-/tree/2.2.6"
             },
-            "time": "2026-10-12T06:15:12+00:00"
+            "time": "2026-10-19T13:05:26+00:00"
         },
         {
             "name": "drupal/drupal_cms_site_template_base",
@@ -5045,29 +5049,29 @@
         },
         {
             "name": "drupal/mcp_server_tool_bridge",
-            "version": "1.0.0-beta3",
+            "version": "1.0.0-beta5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/mcp_server_tool_bridge.git",
-                "reference": "1.0.0-beta3"
+                "reference": "1.0.0-beta5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/mcp_server_tool_bridge-1.0.0-beta3.zip",
-                "reference": "1.0.0-beta3",
-                "shasum": "c45f8d1134cc3eaa375bf244a19298ac989c8f41"
+                "url": "https://ftp.drupal.org/files/projects/mcp_server_tool_bridge-1.0.0-beta5.zip",
+                "reference": "1.0.0-beta5",
+                "shasum": "5bf94b101ab7c3bbfaac8cd55278c4c1d6da1244"
             },
             "require": {
                 "drupal/core": "^10 || ^11",
                 "drupal/mcp_server": "^2.0.0-beta5",
-                "drupal/tool": "^1.0.0-beta8",
+                "drupal/tool": "^1.0.0-beta12",
                 "php": "^8.3"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-beta3",
-                    "datestamp": "1790174604",
+                    "version": "1.0.0-beta5",
+                    "datestamp": "1792606656",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -6287,20 +6291,20 @@
         },
         {
             "name": "drupal/simple_oauth",
-            "version": "6.1.1",
+            "version": "6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/simple_oauth.git",
-                "reference": "6.1.1"
+                "reference": "6.1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/simple_oauth-6.1.1.zip",
-                "reference": "6.1.1",
-                "shasum": "ab22683835ac3300676618f1e59acb327b4989db"
+                "url": "https://ftp.drupal.org/files/projects/simple_oauth-6.1.3.zip",
+                "reference": "6.1.3",
+                "shasum": "11a6c471a13339dae6d9b4dded1df9107823d881"
             },
             "require": {
-                "drupal/consumers": "^1.17",
+                "drupal/consumers": "^1.24",
                 "drupal/core": "^10.3 || ^11",
                 "league/oauth2-server": "^9.0",
                 "php": ">=8.1",
@@ -6313,8 +6317,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "6.1.1",
-                    "datestamp": "1779441676",
+                    "version": "6.1.3",
+                    "datestamp": "1792605223",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6706,17 +6710,17 @@
         },
         {
             "name": "drupal/tool",
-            "version": "1.0.0-beta11",
+            "version": "1.0.0-beta12",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/tool.git",
-                "reference": "1.0.0-beta11"
+                "reference": "1.0.0-beta12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/tool-1.0.0-beta11.zip",
-                "reference": "1.0.0-beta11",
-                "shasum": "8e937783efbec4c440176ced173f0bcf33698831"
+                "url": "https://ftp.drupal.org/files/projects/tool-1.0.0-beta12.zip",
+                "reference": "1.0.0-beta12",
+                "shasum": "cb3fa3b0aab7d3ee59c4c09cfd8b68cc04f7cd48"
             },
             "require": {
                 "drupal/core": "^10.5 || ^11",
@@ -6729,8 +6733,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-beta11",
-                    "datestamp": "1790831917",
+                    "version": "1.0.0-beta12",
+                    "datestamp": "1792530025",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -7622,16 +7626,16 @@
         },
         {
             "name": "enshrined/svg-sanitize",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/darylldoyle/svg-sanitizer.git",
-                "reference": "9ba9001493f5da737759303f13bd965ebdaa778c"
+                "reference": "1976ff93c8d8a234cdd3ff99626bd43ecf11bf49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/9ba9001493f5da737759303f13bd965ebdaa778c",
-                "reference": "9ba9001493f5da737759303f13bd965ebdaa778c",
+                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/1976ff93c8d8a234cdd3ff99626bd43ecf11bf49",
+                "reference": "1976ff93c8d8a234cdd3ff99626bd43ecf11bf49",
                 "shasum": ""
             },
             "require": {
@@ -7661,9 +7665,9 @@
             "description": "An SVG sanitizer for PHP",
             "support": {
                 "issues": "https://github.com/darylldoyle/svg-sanitizer/issues",
-                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/1.1.0"
+                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/1.1.1"
             },
-            "time": "2026-10-19T12:01:32+00:00"
+            "time": "2026-10-20T09:45:10+00:00"
         },
         {
             "name": "goalgorilla/rtseo.js",
@@ -15087,7 +15091,7 @@
     },
     "platform-dev": {},
     "platform-overrides": {
-        "php": "8.5.11"
+        "php": "8.5.12"
     },
     "plugin-api-version": "2.9.0"
 }
