@@ -39,6 +39,7 @@ HOLDS = {
     "twig/twig": "under 3.30 cron fails with a TypeError in easy_email's compiled template",
     "drupal/ui_patterns": "2.0.x commit bac7f81 removes the ui_patterns_source formatter "
                           "WordPal's Display Builder target uses",
+    "drupal/display_builder": "1.0.0-beta9 requires ui_patterns 2.0.23, past the ui_patterns hold",
 }
 
 RELEASE = re.compile(r"v?(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)(\d+))?", re.IGNORECASE)
