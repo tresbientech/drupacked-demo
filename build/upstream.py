@@ -37,9 +37,6 @@ STABLE_TAG = re.compile(r"v\d+\.\d+\.\d+")
 # the site. Deleting an entry lets the next run bump the package.
 HOLDS = {
     "twig/twig": "under 3.30 cron fails with a TypeError in easy_email's compiled template",
-    "drupal/ui_patterns": "2.0.x commit bac7f81 removes the ui_patterns_source formatter "
-                          "WordPal's Display Builder target uses",
-    "drupal/display_builder": "1.0.0-beta9 requires ui_patterns 2.0.23, past the ui_patterns hold",
 }
 
 RELEASE = re.compile(r"v?(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)(\d+))?", re.IGNORECASE)
@@ -135,13 +132,13 @@ def node(summary):
     summary.row("Node", current, newest, "bumped")
 
 
-def metadata(name, suffix=""):
+def metadata(name):
     """`name`'s Composer metadata entries, from drupal.org first and Packagist after, as the site's
     repositories order them."""
     bases = [DRUPAL_METADATA, PACKAGIST_METADATA] if name.startswith("drupal/") else [PACKAGIST_METADATA]
     for base in bases:
         try:
-            return json.loads(fetch(f"{base}{name}{suffix}.json"))["packages"][name]
+            return json.loads(fetch(f"{base}{name}.json"))["packages"][name]
         except urllib.error.HTTPError as error:
             if error.code != 404:
                 raise
@@ -151,15 +148,6 @@ def metadata(name, suffix=""):
 def releases(name):
     """Every version Composer metadata lists for `name`, as written there."""
     return [entry["version"] for entry in metadata(name)]
-
-
-def branch_head(name, constraint):
-    """The newest commit of the branch a `2.0.x-dev#<commit>` constraint names."""
-    branch = constraint.split("#")[0].removesuffix("-dev")
-    for entry in metadata(name, "~dev"):
-        if entry["version"] in (f"dev-{branch}", f"{branch}-dev"):
-            return entry["source"]["reference"][:7]
-    sys.exit(f"{name}: the metadata lists no {branch} branch")
 
 
 def newest_release(current, versions):
@@ -185,9 +173,8 @@ def locked_versions():
 def composer(summary):
     for name, constraint in json.loads((ROOT / COMPOSER).read_text())["require"].items():
         if name in HOLDS:
-            newest = branch_head(name, constraint) if "#" in constraint else newest_release(constraint, releases(name))[0][1]
-            summary.notes.append(f"HELD {name} {constraint[:constraint.find('#') + 8] if '#' in constraint else constraint} "
-                                 f"({newest}): {HOLDS[name]}")
+            newest = newest_release(constraint, releases(name))[0][1]
+            summary.notes.append(f"HELD {name} {constraint} ({newest}): {HOLDS[name]}")
             continue
         # A range moves with composer update; a dev branch pin moves only by hand.
         if release_key(constraint) is None:

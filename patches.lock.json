@@ -1,5 +1,5 @@
 {
-    "_hash": "2ca5c7730aeded22621122fe0cdb9ccc207060cb51bf975258eab0ed0092b666",
+    "_hash": "3ae18675b3a71ae8811c9d18e508f94bc6b9ca3819fe993d285c5a9675812e71",
     "patches": {
         "drupal/canvas": [
             {
@@ -14,26 +14,6 @@
             }
         ],
         "drupal/display_builder": [
-            {
-                "package": "drupal/display_builder",
-                "description": "Inject UI Patterns component manager",
-                "url": "patches/display_builder-ui-patterns-component-manager.patch",
-                "sha256": "f89f9ed9833aa09e660c3d84aae2c8eb6f89e2b824d7b53033c62902a9dea2a6",
-                "depth": 1,
-                "extra": {
-                    "provenance": "root"
-                }
-            },
-            {
-                "package": "drupal/display_builder",
-                "description": "Declare the placeholder props schema",
-                "url": "patches/display_builder-placeholder-props-schema.patch",
-                "sha256": "e28981c7c8da366fb883ab02782de6040b78e5a5676a502a5e53ccd0c6c56f5b",
-                "depth": 1,
-                "extra": {
-                    "provenance": "root"
-                }
-            },
             {
                 "package": "drupal/display_builder",
                 "description": "Accept and show a node label",

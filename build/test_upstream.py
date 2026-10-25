@@ -74,9 +74,6 @@ class Bumper(unittest.TestCase):
             base = upstream.DRUPAL_METADATA if name.startswith("drupal/") else upstream.PACKAGIST_METADATA
             versions = listed.get(name, [constraint])
             self.indexes[f"{base}{name}.json"] = json.dumps({"packages": {name: [{"version": v} for v in versions]}})
-            if "#" in constraint:
-                self.indexes[f"{base}{name}~dev.json"] = json.dumps({"packages": {name: [
-                    {"version": "dev-2.0.x", "source": {"reference": "bac7f817f055c11a14a84235c9c4777c3984498f"}}]}})
         self.updated = False
         upstream.composer_update = lambda: setattr(self, "updated", True)
 
@@ -170,13 +167,6 @@ class Bumper(unittest.TestCase):
         self.assertEqual(self.pin("twig/twig"), "3.29.0")
         self.assertIn(f"HELD twig/twig 3.29.0 (3.30.0): {upstream.HOLDS['twig/twig']}", summary.notes)
         self.assertNotIn("twig/twig", [row[0] for row in summary.rows])
-
-    def test_a_held_branch_pin_names_the_branch_head(self):
-        self.serve_composer()
-        summary = self.run_bumper(upstream.composer)
-        self.assertIn(f"HELD drupal/ui_patterns {self.pin('drupal/ui_patterns')[:17]} (bac7f81): {upstream.HOLDS['drupal/ui_patterns']}",
-                      summary.notes)
-        self.assertTrue(self.pin("drupal/ui_patterns").startswith("2.0.x-dev#"))
 
     def test_composer_update_moves_the_lock_and_each_move_is_listed(self):
         self.serve_composer()

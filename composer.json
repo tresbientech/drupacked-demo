@@ -17,7 +17,7 @@
         "drupal/core-project-message": "^11.4",
         "drupal/core-recommended": "^11.4",
         "drupal/core-vendor-hardening": "^11.4",
-        "drupal/display_builder": "1.0.0-beta8",
+        "drupal/display_builder": "1.0.0-beta9",
         "drupal/drupal_cms_content_type_base": "2.1.6",
         "drupal/drupal_cms_installer": "2.2.7",
         "drupal/drupal_cms_search": "2.2.6",
@@ -27,7 +27,7 @@
         "drupal/mercury_demo": "1.1.1",
         "drupal/tool": "^1.0@dev",
         "drupal/tool_belt": "^1.0@alpha",
-        "drupal/ui_patterns": "2.0.x-dev#b55538e73195f114f8e9db4a6a70766b3c014b8e",
+        "drupal/ui_patterns": "2.0.23",
         "drupal/ui_skins": "1.2.1",
         "drupal/wordpal": "1.0.0-alpha11",
         "drush/drush": "^13.6",
@@ -58,8 +58,6 @@
                 "Name a layer after its label": "patches/canvas-layer-node-name.patch"
             },
             "drupal/display_builder": {
-                "Inject UI Patterns component manager": "patches/display_builder-ui-patterns-component-manager.patch",
-                "Declare the placeholder props schema": "patches/display_builder-placeholder-props-schema.patch",
                 "Accept and show a node label": "patches/display_builder-node-label.patch"
             },
             "drupal/ui_patterns": {

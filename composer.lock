@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfc2ed9145bb7827c88f72f754269d86",
+    "content-hash": "dd5216f038b7e4da7eafc68325c44d9f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3276,21 +3276,21 @@
         },
         {
             "name": "drupal/display_builder",
-            "version": "1.0.0-beta8",
+            "version": "1.0.0-beta9",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/display_builder.git",
-                "reference": "1.0.0-beta8"
+                "reference": "1.0.0-beta9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/display_builder-1.0.0-beta8.zip",
-                "reference": "1.0.0-beta8",
-                "shasum": "5299de478763aadb7bb9f367063f4b342548327b"
+                "url": "https://ftp.drupal.org/files/projects/display_builder-1.0.0-beta9.zip",
+                "reference": "1.0.0-beta9",
+                "shasum": "eac63571d6f46a9a0597effb4682f9b5d731f120"
             },
             "require": {
                 "drupal/core": "^11.4",
-                "drupal/ui_patterns": "^2.0.21",
+                "drupal/ui_patterns": "2.0.23",
                 "drupal/ui_patterns_field": "*",
                 "drupal/ui_patterns_library": "*",
                 "php": ">=8.3"
@@ -3313,14 +3313,19 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-beta8",
-                    "datestamp": "1790598315",
+                    "version": "1.0.0-beta9",
+                    "datestamp": "1792664815",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
                     }
                 },
-                "patches": []
+                "patches": {
+                    "drupal/ui_patterns": {
+                        "Source labels build every choice to read the chosen one, https://www.drupal.org/project/ui_patterns/issues/3630451": "https://git.drupalcode.org/project/display_builder/-/raw/3f2a823339dd6732a7f744ca763c85b66f9b53e6/patches/ui_patterns.source_label_lookups.patch",
+                        "SourceValueItem::setValue() walks the whole source tree through its schema on each load, https://www.drupal.org/project/ui_patterns/issues/3630456": "https://git.drupalcode.org/project/display_builder/-/raw/3f2a823339dd6732a7f744ca763c85b66f9b53e6/patches/ui_patterns.ensure_node_ids_skip.patch"
+                    }
+                }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "scripts": {
@@ -6897,11 +6902,17 @@
         },
         {
             "name": "drupal/ui_patterns",
-            "version": "dev-2.0.x",
+            "version": "2.0.23",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/ui_patterns.git",
-                "reference": "b55538e73195f114f8e9db4a6a70766b3c014b8e"
+                "reference": "2.0.23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/ui_patterns-2.0.23.zip",
+                "reference": "2.0.23",
+                "shasum": "e1b2f4774f03239ebb3bcd3b8a3bf31dc7efcd65"
             },
             "require": {
                 "drupal/core": "^10.6 || ^11.3 || ^12",
@@ -6914,15 +6925,12 @@
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-2.0.x": "2.0.x-dev"
-                },
                 "drupal": {
-                    "version": "2.0.22+4-dev",
-                    "datestamp": "1791834235",
+                    "version": "2.0.23",
+                    "datestamp": "1791918588",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -15081,7 +15089,6 @@
         "drupal/mcp_server_tool_bridge": 10,
         "drupal/tool": 20,
         "drupal/tool_belt": 15,
-        "drupal/ui_patterns": 20,
         "drupal/wordpal": 15
     },
     "prefer-stable": true,
