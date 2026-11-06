@@ -1,5 +1,13 @@
 name: Static site
 type: Site
-description: Enables Tome Static, which exports the site to HTML.
+description: Enables Tome Static, which exports the site to HTML, and core content search as the page the static port hands to Drupal.
 install:
   - tome_static
+  - search_node
+config:
+  # The content search page is optional config, which a recipe imports by name.
+  import:
+    search_node: '*'
+  actions:
+    user.role.anonymous:
+      grantPermission: 'search content'
