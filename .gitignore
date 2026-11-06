@@ -1,4 +1,4 @@
-# composer install writes these three. The site's own recipe sits among the
+# composer install writes these three. The site's own recipes sit among the
 # recipes Composer installs.
 /vendor/
 /web/
