@@ -4,5 +4,6 @@ description: 'The Mercury Demo site template, with the WordPal converter and Age
 recipes:
   - mercury_demo
   - agent_access
+  - static_site
 install:
   - wordpal_canvas

@@ -4,4 +4,5 @@
 /web/
 /recipes/*
 !/recipes/drupacked_demo_site/
+!/recipes/static_site/
 __pycache__/

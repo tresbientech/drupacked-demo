@@ -1,0 +1,5 @@
+name: Static site
+type: Site
+description: Enables Tome Static, which exports the site to HTML.
+install:
+  - tome_static

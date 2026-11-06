@@ -25,6 +25,7 @@
         "drupal/mcp_server_oauth-mcp_server_oauth": "^1.0@alpha",
         "drupal/mcp_server_tool_bridge": "^1.0@beta",
         "drupal/mercury_demo": "1.1.1",
+        "drupal/tome": "^1.16",
         "drupal/tool": "^1.0@dev",
         "drupal/tool_belt": "^1.0@alpha",
         "drupal/ui_patterns": "2.0.23",
@@ -79,7 +80,10 @@
             "recipes/{$name}": ["type:drupal-recipe"]
         },
         "drupack": {
-            "subdomain": "demo"
+            "subdomain": "demo",
+            "static": {
+                "dynamic": ["/search*"]
+            }
         }
     }
 }

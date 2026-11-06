@@ -31,6 +31,16 @@ A release holds these builds:
 [Drupack's README](https://github.com/tresbientech/drupack#readme) covers what
 the executable does once it runs.
 
+## The static export
+
+`composer.json` turns Drupack's static listener on under `extra.drupack.static`.
+Built on a Drupack release that carries the listener, the executable serves the
+Tome export on the site's port plus one, 7226 by default, beside Drupal on 7225.
+`./drupacked-demo export` writes the export. The static port serves it and keeps
+`/search` live, the one `dynamic` path. Until the Drupack pin in
+`.github/workflows/build.yml` names such a release, the executable serves Drupal
+alone.
+
 ## What the repository holds
 
 - `composer.json` and `composer.lock`, the site's Composer project
