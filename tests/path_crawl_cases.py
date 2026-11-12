@@ -17,7 +17,6 @@ import harness
 ADMIN_USER = "path-crawl-admin"
 ADMIN_PASSWORD = "Path.crawl.test.password.2026"
 CREDENTIALS = ("--admin-user", ADMIN_USER, "--admin-password", ADMIN_PASSWORD)
-LINK_PREFIX = "  Login:     "
 
 # The Mercury Demo recipe seeds exactly one node (an unpublished Privacy policy page
 # with no image field set) but six image media entities, already uploaded by the
@@ -68,11 +67,15 @@ class PathCrawlCases(harness.ConformanceCase):
     def tearDown(self):
         self.site.stop()
 
-    def _authenticated_opener(self):
-        """Follow the start's one-time login link with a cookie jar, so the returned
-        opener carries a session signed in as uid 1 for every request that follows.
+    def _authenticated_opener(self, data):
+        """Follow a one-time login link with a cookie jar, so the returned opener
+        carries a session signed in as uid 1 for every request that follows. A start
+        nobody watches prints no link, so Drush mints this one.
         """
-        link = harness.wait_for_line(self.site.log_path, 0, LINK_PREFIX, harness.WAITS["start"].seconds)
+        minted = harness.run_drush(harness.BINARY, self.case_dir, data, "user:login", "--no-browser",
+                                   "/admin/dashboard")
+        self.assertEqual(minted.returncode, 0, minted.stderr)
+        link = minted.stdout.strip()
         opener = build_opener(HTTPCookieProcessor(CookieJar()))
         with opener.open(link, timeout=harness.WAITS["http_request"].seconds) as response:
             landing = response.geturl()
@@ -104,7 +107,7 @@ class PathCrawlCases(harness.ConformanceCase):
         app_root = root.stdout.strip()
         self.assertTrue(app_root, "Drupal::root() reported no application root")
 
-        opener = self._authenticated_opener()
+        opener = self._authenticated_opener(data)
         pages = ("/", "/card-components", "/admin/dashboard", "/admin/modules", IMAGE_NODE_ALIAS)
         failures = []
         derivative = None
