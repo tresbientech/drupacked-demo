@@ -92,10 +92,9 @@ releases from 1.
 `build/upstream.py` bumps:
 
 - the Drupack tag in `.github/workflows/build.yml`, to Drupack's latest release
-- `config.platform.php` in `composer.json`, to the PHP that Drupack release runs
 - the Node release in `drupack.yml`, inside its major line
 - each exact Composer pin, inside its major line and at its stability or better
-- the lock, with `composer update`
+- the lock, with that Drupack release's `drupack composer update`
 
 It reports a new major and leaves it alone. `HOLDS` in the script names each
 package kept at its pin, with the breakage a newer release brings.

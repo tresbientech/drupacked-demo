@@ -4,8 +4,10 @@ build/next-version.py. Run with:
     python3 -m unittest discover -s build
 """
 
+import hashlib
 import importlib.util
 import json
+import os
 import shutil
 import tempfile
 import unittest
@@ -59,9 +61,8 @@ class Bumper(unittest.TestCase):
     def pin(self, name):
         return json.loads(self.text(upstream.COMPOSER))["require"][name]
 
-    def serve_drupack(self, version, php):
+    def serve_drupack(self, version):
         self.indexes[upstream.DRUPACK_RELEASE] = json.dumps({"version": version})
-        self.indexes[f"{upstream.DRUPACK_SOURCE}{version}/runtime/builder-inputs.sh"] = php
 
     def serve_node(self, *releases):
         self.indexes[upstream.NODE_RELEASES] = json.dumps(
@@ -77,28 +78,18 @@ class Bumper(unittest.TestCase):
         self.updated = False
         upstream.composer_update = lambda: setattr(self, "updated", True)
 
-    def test_a_newer_drupack_release_rewrites_the_workflow_ref_and_the_php_platform(self):
+    def test_a_newer_drupack_release_rewrites_the_workflow_ref(self):
         current = upstream.read(upstream.WORKFLOW, upstream.DRUPACK_PIN)
-        platform = upstream.read(upstream.COMPOSER, upstream.PLATFORM_PIN)
-        self.serve_drupack("9.0.0", "php_version=8.5.99\nfrankenphp_version=1.12.7\n")
-        summary = self.run_bumper(upstream.drupack)
-        self.assertEqual(summary.rows, [("Drupack", current, "9.0.0", "bumped"),
-                                        ("PHP platform", platform, "8.5.99", "bumped")])
-        self.assertIn("build.yml@9.0.0\n", self.text(upstream.WORKFLOW))
-        self.assertIn('"platform": {"php": "8.5.99"}', self.text(upstream.COMPOSER))
-
-    def test_a_drupack_release_on_the_same_php_leaves_the_platform(self):
-        current = upstream.read(upstream.WORKFLOW, upstream.DRUPACK_PIN)
-        platform = upstream.read(upstream.COMPOSER, upstream.PLATFORM_PIN)
-        self.serve_drupack("9.0.0", f"php_version={platform}\n")
+        self.indexes[upstream.DRUPACK_RELEASE] = json.dumps({"version": "9.0.0"})
         summary = self.run_bumper(upstream.drupack)
         self.assertEqual(summary.rows, [("Drupack", current, "9.0.0", "bumped")])
+        self.assertIn("build.yml@9.0.0\n", self.text(upstream.WORKFLOW))
 
     def test_a_prerelease_number_past_nine_counts_as_newer(self):
         workflow = self.tree / upstream.WORKFLOW
         current = upstream.read(upstream.WORKFLOW, upstream.DRUPACK_PIN)
         workflow.write_text(workflow.read_text().replace(current, "1.0.0-alpha9"))
-        self.serve_drupack("1.0.0-alpha10", "php_version=8.5.99\n")
+        self.serve_drupack("1.0.0-alpha10")
         self.run_bumper(upstream.drupack)
         self.assertIn("build.yml@1.0.0-alpha10\n", self.text(upstream.WORKFLOW))
 
@@ -115,12 +106,28 @@ class Bumper(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self.run_bumper(upstream.drupack)
 
-    def test_a_drupack_release_naming_no_php_stops_the_run_before_any_write(self):
-        self.serve_drupack("9.0.0", "frankenphp_version=1.12.7\n")
-        before = {path: self.text(path) for path in PINNED}
-        with self.assertRaises(SystemExit):
-            self.run_bumper(upstream.drupack)
-        self.assertEqual({path: self.text(path) for path in PINNED}, before)
+    def serve_engine(self, body, sha256):
+        version = upstream.read(upstream.WORKFLOW, upstream.DRUPACK_PIN)
+        url = f"{upstream.DRUPACK_DOWNLOADS}{version}/drupack-{version}-linux-amd64"
+        self.indexes[f"{upstream.DRUPACK_DOWNLOADS}{version}/release.json"] = json.dumps({"assets": [
+            {"name": "drupack", "target": "linux-amd64-musl", "url": url + "-musl", "sha256": "0" * 64},
+            {"name": "drupack", "target": "linux-amd64", "url": url, "sha256": sha256}]})
+        self.addCleanup(setattr, upstream, "download", upstream.download)
+        upstream.download = lambda requested: body if requested == url else self.fail(requested)
+
+    def test_the_engine_is_the_pinned_release_for_the_runner(self):
+        self.serve_engine(b"engine", hashlib.sha256(b"engine").hexdigest())
+        with tempfile.TemporaryDirectory() as directory:
+            path = upstream.engine(directory)
+            self.assertEqual(path.read_bytes(), b"engine")
+            self.assertTrue(os.access(path, os.X_OK))
+
+    def test_an_engine_that_misses_its_sha256_stops_the_run_before_any_write(self):
+        self.serve_engine(b"tampered", hashlib.sha256(b"engine").hexdigest())
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(SystemExit):
+                upstream.engine(directory)
+            self.assertEqual(list(Path(directory).iterdir()), [])
 
     def test_a_newer_node_lts_rewrites_the_pin(self):
         current = upstream.read(upstream.SITE, upstream.NODE_PIN)
@@ -200,7 +207,7 @@ class Bumper(unittest.TestCase):
 
     def test_a_pin_matching_nowhere_stops_the_run(self):
         (self.tree / upstream.WORKFLOW).write_text("jobs: {}\n")
-        self.serve_drupack("9.0.0", "php_version=8.5.99\n")
+        self.serve_drupack("9.0.0")
         with self.assertRaises(SystemExit):
             self.run_bumper(upstream.drupack)
 

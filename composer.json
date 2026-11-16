@@ -46,7 +46,6 @@
             "php-http/discovery": true,
             "symfony/runtime": true
         },
-        "platform": {"php": "8.5.12"},
         "sort-packages": true,
         "optimize-autoloader": true
     },

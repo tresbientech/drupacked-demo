@@ -5,10 +5,12 @@ what it did as a Markdown summary. It edits the working tree and never commits.
     python3 build/upstream.py
 """
 
+import hashlib
 import json
 import re
 import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -20,17 +22,16 @@ SITE = "drupack.yml"
 
 # The release Drupack's own self-update reads: the one GitHub marks latest.
 DRUPACK_RELEASE = "https://github.com/tresbientech/drupack/releases/latest/download/release.json"
-DRUPACK_SOURCE = "https://raw.githubusercontent.com/tresbientech/drupack/"
+DRUPACK_DOWNLOADS = "https://github.com/tresbientech/drupack/releases/download/"
+# The forge runner, which runs the pinned engine's Composer.
+ENGINE_TARGET = "linux-amd64"
 NODE_RELEASES = "https://nodejs.org/dist/index.json"
 DRUPAL_METADATA = "https://packages.drupal.org/files/packages/8/p2/"
 PACKAGIST_METADATA = "https://repo.packagist.org/p2/"
 
 # Each pin's line in its file, its value captured.
 DRUPACK_PIN = r"build\.yml@(\S+)$"
-PLATFORM_PIN = r'"platform": \{"php": "([^"]+)"\}'
 NODE_PIN = r"^node: (.+)$"
-# The PHP a Drupack release compiles, in its runtime/builder-inputs.sh.
-DRUPACK_PHP = r"^php_version=(\d+\.\d+\.\d+)$"
 STABLE_TAG = re.compile(r"v\d+\.\d+\.\d+")
 
 # Exact pins the bumper leaves alone, each with the reason a newer release breaks
@@ -43,9 +44,13 @@ RELEASE = re.compile(r"v?(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)(\d+))?", re.IGNO
 STABILITY = {"alpha": 0, "beta": 1, "rc": 2, None: 3}
 
 
+def download(url):
+    with urllib.request.urlopen(url, timeout=300) as response:
+        return response.read()
+
+
 def fetch(url):
-    with urllib.request.urlopen(url, timeout=60) as response:
-        return response.read().decode()
+    return download(url).decode()
 
 
 def version_key(version):
@@ -103,16 +108,25 @@ def drupack(summary):
     if release_key(newest) <= release_key(current):
         summary.row("Drupack", current, newest, "current")
         return
-    php = re.findall(DRUPACK_PHP, fetch(f"{DRUPACK_SOURCE}{newest}/runtime/builder-inputs.sh"), re.MULTILINE)
-    if len(php) != 1:
-        sys.exit(f"Drupack {newest} names {len(php)} PHP versions, not one")
     rewrite(WORKFLOW, DRUPACK_PIN, newest)
     summary.row("Drupack", current, newest, "bumped")
-    # Composer resolves the lock against the PHP the pinned Drupack runs.
-    platform = read(COMPOSER, PLATFORM_PIN)
-    if php[0] != platform:
-        rewrite(COMPOSER, PLATFORM_PIN, php[0])
-        summary.row("PHP platform", platform, php[0], "bumped")
+
+
+def engine(directory):
+    """The pinned Drupack engine for ENGINE_TARGET, downloaded into `directory` and checked."""
+    version = read(WORKFLOW, DRUPACK_PIN)
+    # GitHub's answers are remote input.
+    assets = [asset for asset in json.loads(fetch(f"{DRUPACK_DOWNLOADS}{version}/release.json"))["assets"]
+              if asset["name"] == "drupack" and asset["target"] == ENGINE_TARGET]
+    if len(assets) != 1:
+        sys.exit(f"Drupack {version} lists {len(assets)} {ENGINE_TARGET} engines, not one")
+    body = download(assets[0]["url"])
+    if hashlib.sha256(body).hexdigest() != assets[0]["sha256"]:
+        sys.exit(f"Drupack {version}: {assets[0]['url']} does not match its sha256")
+    path = Path(directory) / "drupack"
+    path.write_bytes(body)
+    path.chmod(0o755)
+    return path
 
 
 def node(summary):
@@ -161,8 +175,10 @@ def newest_release(current, versions):
 
 
 def composer_update():
-    subprocess.run(["composer", "update", "--no-install", "--no-interaction", "--no-progress", "--no-audit"],
-                   cwd=ROOT, check=True)
+    """Updates the lock with the pinned engine's Composer, which resolves against the PHP it carries."""
+    with tempfile.TemporaryDirectory() as directory:
+        subprocess.run([engine(directory), "composer", "update", "--no-install", "--no-interaction",
+                        "--no-progress", "--no-audit"], cwd=ROOT, check=True)
 
 
 def locked_versions():
