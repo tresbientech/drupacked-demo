@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4968d8200471ffa2bdd2424865de0a52",
+    "content-hash": "444a0d93ed1f8ea65f275837f897926b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1175,16 +1175,16 @@
         },
         {
             "name": "consolidation/robo",
-            "version": "5.2.3",
+            "version": "5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/consolidation/robo.git",
-                "reference": "78a541531cb613e9ce825b64ef3aa666d1e95598"
+                "reference": "2a2327b8dc6c893b76a6fc1cfe51cb785a38b7e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/consolidation/robo/zipball/78a541531cb613e9ce825b64ef3aa666d1e95598",
-                "reference": "78a541531cb613e9ce825b64ef3aa666d1e95598",
+                "url": "https://api.github.com/repos/consolidation/robo/zipball/2a2327b8dc6c893b76a6fc1cfe51cb785a38b7e2",
+                "reference": "2a2327b8dc6c893b76a6fc1cfe51cb785a38b7e2",
                 "shasum": ""
             },
             "require": {
@@ -1207,11 +1207,11 @@
                 "codegyre/robo": "*"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.95.30",
                 "natxet/cssmin": "3.0.4",
                 "patchwork/jsqueeze": "^2",
                 "pear/archive_tar": "^1.4.4",
                 "phpunit/phpunit": "^7.5.20 || ^8 || ^9",
-                "squizlabs/php_codesniffer": "^3.6",
                 "yoast/phpunit-polyfills": "^0.2.0"
             },
             "suggest": {
@@ -1242,10 +1242,10 @@
             "description": "Modern task runner",
             "support": {
                 "issues": "https://github.com/consolidation/robo/issues",
-                "source": "https://github.com/consolidation/robo/tree/5.2.3"
+                "source": "https://github.com/consolidation/robo/tree/5.2.4"
             },
-            "time": "2026-11-12T17:53:46+00:00",
-            "published-time": "2026-11-12T17:54:12+00:00"
+            "time": "2026-11-20T19:31:06+00:00",
+            "published-time": "2026-11-20T19:31:33+00:00"
         },
         {
             "name": "consolidation/self-update",
@@ -1885,26 +1885,26 @@
         },
         {
             "name": "drupal/agent_access",
-            "version": "1.0.0-alpha7",
+            "version": "1.0.0-alpha8",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/agent_access.git",
-                "reference": "cda0ac366cdcff8ae432bff38bebc0b320d70f21"
+                "reference": "6b6696a90a2f9274cf2aa1d6d51442edc19f5ddc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fagent_access/repository/archive.zip?sha=cda0ac366cdcff8ae432bff38bebc0b320d70f21",
-                "reference": "cda0ac366cdcff8ae432bff38bebc0b320d70f21",
+                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fagent_access/repository/archive.zip?sha=6b6696a90a2f9274cf2aa1d6d51442edc19f5ddc",
+                "reference": "6b6696a90a2f9274cf2aa1d6d51442edc19f5ddc",
                 "shasum": ""
             },
             "require": {
-                "drupal/core": "^11.4",
+                "drupal/core": "^11.4.13",
                 "drupal/mcp_server": "^2.0.0-beta7",
                 "drupal/mcp_server_oauth": "^1.0.0-alpha2@alpha",
-                "drupal/mcp_server_tool_bridge": "^1.0.0-beta4@beta",
+                "drupal/mcp_server_tool_bridge": "^1.0.0-beta5@beta",
                 "drupal/simple_oauth": "^6.1.4",
                 "drupal/tool": "^1.0.0-beta12@beta",
-                "drupal/tool_belt": "^1.0.0-alpha6@alpha",
+                "drupal/tool_belt": "^1.0.0-alpha7@alpha",
                 "e0ipso/simple_oauth_21": "^1.13"
             },
             "type": "drupal-recipe",
@@ -1914,10 +1914,10 @@
             ],
             "description": "Drupal-side connectivity and authorization for external AI agents through existing user accounts; this implementation assembles MCP + OAuth.",
             "support": {
-                "source": "https://git.drupalcode.org/project/agent_access/-/tree/1.0.0-alpha7"
+                "source": "https://git.drupalcode.org/project/agent_access/-/tree/1.0.0-alpha8"
             },
-            "time": "2026-11-14T15:38:57+00:00",
-            "published-time": "2026-11-15T00:10:24+00:00"
+            "time": "2026-11-21T08:49:08+00:00",
+            "published-time": "2026-11-21T15:50:20+00:00"
         },
         {
             "name": "drupal/automatic_updates",
@@ -2132,17 +2132,17 @@
         },
         {
             "name": "drupal/canvas",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/canvas.git",
-                "reference": "1.12.0"
+                "reference": "1.13.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/canvas-1.12.0.zip",
-                "reference": "1.12.0",
-                "shasum": "7b42c6c17329c90612aa15e5187941ff1371bc9e"
+                "url": "https://ftp.drupal.org/files/projects/canvas-1.13.0.zip",
+                "reference": "1.13.0",
+                "shasum": "93d80cd41386cc1034ce729320b44ce83ea72fc5"
             },
             "require": {
                 "drupal/core": "^11.3",
@@ -2156,7 +2156,7 @@
                 "drupal/canvas_ai": "*",
                 "drupal/coder": "^8",
                 "drupal/consumers": "*",
-                "drupal/custom_elements": "^3.4",
+                "drupal/custom_elements": "^3.5.0",
                 "drupal/jsonapi_menu_items": "^1.2.8",
                 "drupal/metatag": "^2.1",
                 "drupal/pathauto": "^1.13",
@@ -2168,15 +2168,16 @@
                 "league/openapi-psr7-validator": "^0.22.0",
                 "mglaman/phpstan-drupal": "2.0.15",
                 "phpat/phpat": "0.12.4",
-                "phpstan/phpstan": "2.2.3",
+                "phpstan/phpstan": "2.2.16",
+                "phpstan/phpstan-phpunit": "2.0.21",
                 "phpstan/phpstan-strict-rules": "2.0.11",
                 "shipmonk/dead-code-detector": "1.2.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.12.0",
-                    "datestamp": "1790579327",
+                    "version": "1.13.0",
+                    "datestamp": "1795080949",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2361,7 +2362,7 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/canvas"
             },
-            "published-time": "2026-09-25T21:20:20+00:00"
+            "published-time": "2026-11-18T22:27:30+00:00"
         },
         {
             "name": "drupal/checklistapi",
@@ -3167,6 +3168,10 @@
             ],
             "description": "Provides a number of utility and helper APIs for Drupal developers and site builders.",
             "homepage": "https://www.drupal.org/project/ctools",
+            "keywords": [
+                "Actively maintained",
+                "Administration tools"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/ctools",
                 "issues": "https://www.drupal.org/project/issues/ctools"
@@ -3482,17 +3487,17 @@
         },
         {
             "name": "drupal/drupal_cms_helper",
-            "version": "2.2.9",
+            "version": "2.2.10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/drupal_cms_helper.git",
-                "reference": "2.2.9"
+                "reference": "2.2.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/drupal_cms_helper-2.2.9.zip",
-                "reference": "2.2.9",
-                "shasum": "d302757929d964d82d438cf203a396bd0bd0b3f4"
+                "url": "https://ftp.drupal.org/files/projects/drupal_cms_helper-2.2.10.zip",
+                "reference": "2.2.10",
+                "shasum": "b38e0f0f7900af45ac13d4b9a42c6146edae9882"
             },
             "require": {
                 "drupal/core": "^11.4.8"
@@ -3507,8 +3512,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.9",
-                    "datestamp": "1794417904",
+                    "version": "2.2.10",
+                    "datestamp": "1795129614",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3538,20 +3543,20 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/drupal_cms_helper"
             },
-            "published-time": "2026-11-11T17:24:43+00:00"
+            "published-time": "2026-11-19T23:06:34+00:00"
         },
         {
             "name": "drupal/drupal_cms_installer",
-            "version": "2.2.9",
+            "version": "2.2.10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/drupal_cms_installer.git",
-                "reference": "1882da06aee1c68c754420f499fb016ac5800a60"
+                "reference": "39de9c57d6b723cf3e2dd2d7cd69bff24d0570e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_installer/repository/archive.zip?sha=1882da06aee1c68c754420f499fb016ac5800a60",
-                "reference": "1882da06aee1c68c754420f499fb016ac5800a60",
+                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_installer/repository/archive.zip?sha=39de9c57d6b723cf3e2dd2d7cd69bff24d0570e0",
+                "reference": "39de9c57d6b723cf3e2dd2d7cd69bff24d0570e0",
                 "shasum": ""
             },
             "require": {
@@ -3566,23 +3571,23 @@
             ],
             "description": "Provides install-time tweaks for Drupal CMS. Not to be used in production.",
             "support": {
-                "source": "https://git.drupalcode.org/project/drupal_cms_installer/-/tree/2.2.9"
+                "source": "https://git.drupalcode.org/project/drupal_cms_installer/-/tree/2.2.10"
             },
-            "time": "2026-11-11T12:01:35+00:00",
-            "published-time": "2026-11-11T17:25:49+00:00"
+            "time": "2026-11-19T17:32:11+00:00",
+            "published-time": "2026-11-19T23:07:41+00:00"
         },
         {
             "name": "drupal/drupal_cms_search",
-            "version": "2.2.9",
+            "version": "2.2.10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/drupal_cms_search.git",
-                "reference": "d5ece4d2a170cab2133facb58d73836106a31421"
+                "reference": "eff881ad03e7e820128dc6c8388cdc73f4868b5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_search/repository/archive.zip?sha=d5ece4d2a170cab2133facb58d73836106a31421",
-                "reference": "d5ece4d2a170cab2133facb58d73836106a31421",
+                "url": "https://git.drupalcode.org/api/v4/projects/project%2Fdrupal_cms_search/repository/archive.zip?sha=eff881ad03e7e820128dc6c8388cdc73f4868b5c",
+                "reference": "eff881ad03e7e820128dc6c8388cdc73f4868b5c",
                 "shasum": ""
             },
             "require": {
@@ -3600,10 +3605,10 @@
             ],
             "description": "Adds a search to help visitors find content.",
             "support": {
-                "source": "https://git.drupalcode.org/project/drupal_cms_search/-/tree/2.2.9"
+                "source": "https://git.drupalcode.org/project/drupal_cms_search/-/tree/2.2.10"
             },
-            "time": "2026-11-11T12:01:35+00:00",
-            "published-time": "2026-11-11T17:26:07+00:00"
+            "time": "2026-11-19T17:32:11+00:00",
+            "published-time": "2026-11-19T23:07:49+00:00"
         },
         {
             "name": "drupal/drupal_cms_site_template_base",
@@ -4018,26 +4023,26 @@
         },
         {
             "name": "drupal/easy_email_theme",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/easy_email_theme.git",
-                "reference": "1.1.1"
+                "reference": "1.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/easy_email_theme-1.1.1.zip",
-                "reference": "1.1.1",
-                "shasum": "f90a3e4a06f00d80d12bc7c42a0aeadec97aeedb"
+                "url": "https://ftp.drupal.org/files/projects/easy_email_theme-1.2.0.zip",
+                "reference": "1.2.0",
+                "shasum": "de06ea8d466693119550814af05c9c107d9d11ae"
             },
             "require": {
-                "drupal/core": "^10.2 || ^11"
+                "drupal/core": "^10.2 || ^11 || ^12"
             },
             "type": "drupal-theme",
             "extra": {
                 "drupal": {
-                    "version": "1.1.1",
-                    "datestamp": "1794855439",
+                    "version": "1.2.0",
+                    "datestamp": "1795183493",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4062,7 +4067,7 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/easy_email_theme"
             },
-            "published-time": "2026-11-16T18:56:57+00:00"
+            "published-time": "2026-11-20T14:04:32+00:00"
         },
         {
             "name": "drupal/easy_email_types_core",
@@ -4629,6 +4634,10 @@
             ],
             "description": "Provides jQuery UI library.",
             "homepage": "https://www.drupal.org/project/jquery_ui",
+            "keywords": [
+                "Developer tools",
+                "Minimally maintained"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/jquery_ui"
             },
@@ -4759,7 +4768,8 @@
             "description": "Implements the Klaro! consent manager utility into Drupal.",
             "homepage": "https://www.drupal.org/project/klaro",
             "keywords": [
-                "Drupal"
+                "Drupal",
+                "Integrations"
             ],
             "support": {
                 "source": "https://git.drupalcode.org/project/klaro",
@@ -4800,17 +4810,17 @@
         },
         {
             "name": "drupal/linkit",
-            "version": "7.0.18",
+            "version": "7.0.19",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/linkit.git",
-                "reference": "7.0.18"
+                "reference": "7.0.19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/linkit-7.0.18.zip",
-                "reference": "7.0.18",
-                "shasum": "f5bb814b0ed8390f64c603e99b01dd00c3837be2"
+                "url": "https://ftp.drupal.org/files/projects/linkit-7.0.19.zip",
+                "reference": "7.0.19",
+                "shasum": "9fe84b73562a8d25f2a2f70bd75cbf9c848c9e4f"
             },
             "require": {
                 "drupal/core": "^10.2 || ^11 || ^12"
@@ -4818,8 +4828,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "7.0.18",
-                    "datestamp": "1794259888",
+                    "version": "7.0.19",
+                    "datestamp": "1795209476",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4852,19 +4862,19 @@
                 {
                     "name": "mark_fullmer",
                     "homepage": "https://www.drupal.org/user/2612816"
-                },
-                {
-                    "name": "utexas",
-                    "homepage": "https://www.drupal.org/user/3716409"
                 }
             ],
             "description": "Linkit - Enriched linking experience",
             "homepage": "http://drupal.org/project/linkit",
+            "keywords": [
+                "Administration tools",
+                "Minimally maintained"
+            ],
             "support": {
                 "source": "http://cgit.drupalcode.org/linkit",
                 "issues": "http://drupal.org/project/linkit"
             },
-            "published-time": "2026-11-09T21:31:07+00:00"
+            "published-time": "2026-11-20T21:17:35+00:00"
         },
         {
             "name": "drupal/login_emailusername",
@@ -5698,24 +5708,23 @@
         },
         {
             "name": "drupal/navigation_extra_tools",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/navigation_extra_tools.git",
-                "reference": "1.3.2"
+                "reference": "1.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/navigation_extra_tools-1.3.2.zip",
-                "reference": "1.3.2",
-                "shasum": "376e6638a064ba319b0af9672ae325e1c580180f"
+                "url": "https://ftp.drupal.org/files/projects/navigation_extra_tools-1.3.3.zip",
+                "reference": "1.3.3",
+                "shasum": "0fe2d50d22ae64289d9006f604450c8febc4b0b0"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11 || ^12",
                 "php": ">=8.1"
             },
             "require-dev": {
-                "drupal/automatic_updates": "^3.1 || ^4.0@alpha",
                 "drupal/devel": "^5.1",
                 "drupal/project_browser": "^2.0-beta3 || ^2.1-beta3",
                 "drush/drush": ">=11.0"
@@ -5723,8 +5732,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.3.2",
-                    "datestamp": "1770243935",
+                    "version": "1.3.3",
+                    "datestamp": "1795345467",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5748,11 +5757,15 @@
             ],
             "description": "Provide useful tools to Drupal Navigation.",
             "homepage": "https://www.drupal.org/project/navigation_extra_tools",
+            "keywords": [
+                "Actively maintained",
+                "Administration tools"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/navigation_extra_tools",
                 "issues": "https://www.drupal.org/project/issues/navigation_extra_tools"
             },
-            "published-time": "2026-02-04T22:11:39+00:00"
+            "published-time": "2026-11-22T11:04:07+00:00"
         },
         {
             "name": "drupal/pathauto",
@@ -6014,6 +6027,10 @@
             ],
             "description": "Allows users to redirect from old URLs to new URLs.",
             "homepage": "https://www.drupal.org/project/redirect",
+            "keywords": [
+                "Administration tools",
+                "Seeking co-maintainer(s)"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/redirect"
             },
@@ -6151,6 +6168,10 @@
             ],
             "description": "Automatically publish and unpublish content at specified dates and times.",
             "homepage": "https://drupal.org/project/scheduler",
+            "keywords": [
+                "Actively maintained",
+                "Administration tools"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/scheduler",
                 "issues": "https://www.drupal.org/project/issues/scheduler"
@@ -6288,6 +6309,10 @@
             ],
             "description": "Provides a generic framework for modules offering search capabilities.",
             "homepage": "https://www.drupal.org/project/search_api",
+            "keywords": [
+                "Actively maintained",
+                "Site search"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/search_api",
                 "issues": "https://www.drupal.org/project/issues/search_api",
@@ -7134,27 +7159,30 @@
         },
         {
             "name": "drupal/tool_belt",
-            "version": "1.0.0-alpha6",
+            "version": "1.0.0-alpha7",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/tool_belt.git",
-                "reference": "1.0.0-alpha6"
+                "reference": "1.0.0-alpha7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/tool_belt-1.0.0-alpha6.zip",
-                "reference": "1.0.0-alpha6",
-                "shasum": "0fd245cb07dbfd13a1a2491c68a2a5f1b24fcdd1"
+                "url": "https://ftp.drupal.org/files/projects/tool_belt-1.0.0-alpha7.zip",
+                "reference": "1.0.0-alpha7",
+                "shasum": "2e4cb07e4d510df9737b5b9808ded4c7b02b7d0c"
             },
             "require": {
                 "drupal/core": "^10.5 || ^11 || ^12",
-                "drupal/tool": "^1.0.0-beta10"
+                "drupal/tool": "^1.0.0-beta12"
+            },
+            "require-dev": {
+                "drupal/pathauto": "^1.13"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-alpha6",
-                    "datestamp": "1790577600",
+                    "version": "1.0.0-alpha7",
+                    "datestamp": "1795180706",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Alpha releases are not covered by Drupal security advisories."
@@ -7181,11 +7209,15 @@
             ],
             "description": "A default collection of tools covering common Drupal core actions.",
             "homepage": "https://www.drupal.org/project/tool_belt",
+            "keywords": [
+                "Actively maintained",
+                "Artificial Intelligence (AI)"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/tool_belt",
                 "issues": "https://www.drupal.org/project/issues/tool_belt"
             },
-            "published-time": "2026-09-28T06:39:39+00:00"
+            "published-time": "2026-11-20T13:18:05+00:00"
         },
         {
             "name": "drupal/trash",
@@ -7481,17 +7513,17 @@
         },
         {
             "name": "drupal/ui_skins",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/ui_skins.git",
-                "reference": "1.2.1"
+                "reference": "1.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/ui_skins-1.2.1.zip",
-                "reference": "1.2.1",
-                "shasum": "99bbc1165afbb5b813c835e83b63eaef288cad38"
+                "url": "https://ftp.drupal.org/files/projects/ui_skins-1.3.0.zip",
+                "reference": "1.3.0",
+                "shasum": "e23c6166bd8ce19e624c3a328c1529943799d174"
             },
             "require": {
                 "drupal/core": "^11.4 || ^12",
@@ -7500,8 +7532,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.2.1",
-                    "datestamp": "1785164803",
+                    "version": "1.3.0",
+                    "datestamp": "1795276533",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7524,10 +7556,13 @@
             ],
             "description": "Allow handle some theme settings like CSS variables.",
             "homepage": "https://www.drupal.org/project/ui_skins",
+            "keywords": [
+                "Actively maintained"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/ui_skins"
             },
-            "published-time": "2026-07-27T15:06:22+00:00"
+            "published-time": "2026-11-21T15:54:12+00:00"
         },
         {
             "name": "drupal/view_password",
@@ -7939,26 +7974,26 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "4.0.4",
+            "version": "4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "d42c8731f0624ad6bdc8d3e5e9a4524f68801cfa"
+                "reference": "9bef884e12278a7b89b64adbfb9379c021d3c102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/d42c8731f0624ad6bdc8d3e5e9a4524f68801cfa",
-                "reference": "d42c8731f0624ad6bdc8d3e5e9a4524f68801cfa",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/9bef884e12278a7b89b64adbfb9379c021d3c102",
+                "reference": "9bef884e12278a7b89b64adbfb9379c021d3c102",
                 "shasum": ""
             },
             "require": {
-                "doctrine/lexer": "^2.0 || ^3.0",
+                "doctrine/lexer": "^3.0.3",
                 "php": ">=8.1",
-                "symfony/polyfill-intl-idn": "^1.26"
+                "symfony/polyfill-intl-idn": "^1.43"
             },
             "require-dev": {
-                "phpunit/phpunit": "^10.2",
-                "vimeo/psalm": "^5.12"
+                "phpunit/phpunit": "^10.5.67",
+                "vimeo/psalm": "^5.26.1"
             },
             "suggest": {
                 "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
@@ -7994,7 +8029,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/4.0.4"
+                "source": "https://github.com/egulias/EmailValidator/tree/4.0.5"
             },
             "funding": [
                 {
@@ -8002,8 +8037,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-06T22:45:56+00:00",
-            "published-time": "2025-03-20T21:39:03+00:00"
+            "time": "2026-11-22T16:52:20+00:00",
+            "published-time": "2026-11-22T22:05:57+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -8204,22 +8239,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.16.3",
+            "version": "7.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "c88a78082757dd5a0c44191651535259fcb6e605"
+                "reference": "f61ba5ea0a55032a55ddbb72cab7d307c1043654"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/c88a78082757dd5a0c44191651535259fcb6e605",
-                "reference": "c88a78082757dd5a0c44191651535259fcb6e605",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f61ba5ea0a55032a55ddbb72cab7d307c1043654",
+                "reference": "f61ba5ea0a55032a55ddbb72cab7d307c1043654",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^2.6",
-                "guzzlehttp/psr7": "^2.13.4",
+                "guzzlehttp/promises": "^2.6.2",
+                "guzzlehttp/psr7": "^2.13.6",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.5 || ^3.0",
@@ -8312,7 +8347,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.16.3"
+                "source": "https://github.com/guzzle/guzzle/tree/7.17.0"
             },
             "funding": [
                 {
@@ -8328,21 +8363,21 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-11-17T16:23:09+00:00",
-            "published-time": "2026-11-17T16:23:41+00:00"
+            "time": "2026-11-22T16:49:11+00:00",
+            "published-time": "2026-11-22T16:50:19+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.6.0",
+            "version": "2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "3d88c829bd5f13d13847b39067dbf09a60af2154"
+                "reference": "72e93ed2b1f3d8c09d1460c950bd5726face7ccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/3d88c829bd5f13d13847b39067dbf09a60af2154",
-                "reference": "3d88c829bd5f13d13847b39067dbf09a60af2154",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/72e93ed2b1f3d8c09d1460c950bd5726face7ccd",
+                "reference": "72e93ed2b1f3d8c09d1460c950bd5726face7ccd",
                 "shasum": ""
             },
             "require": {
@@ -8397,7 +8432,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.6.0"
+                "source": "https://github.com/guzzle/promises/tree/2.6.2"
             },
             "funding": [
                 {
@@ -8413,21 +8448,21 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-18T12:46:59+00:00",
-            "published-time": "2026-10-18T12:47:39+00:00"
+            "time": "2026-11-21T03:45:23+00:00",
+            "published-time": "2026-11-21T03:46:19+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.13.4",
+            "version": "2.13.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "ad5e3f872690e1151e1171de2963150fc45ea1e3"
+                "reference": "2bd3dccf56e99cdacf74b1ad5e06a08a5a7739f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/ad5e3f872690e1151e1171de2963150fc45ea1e3",
-                "reference": "ad5e3f872690e1151e1171de2963150fc45ea1e3",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/2bd3dccf56e99cdacf74b1ad5e06a08a5a7739f2",
+                "reference": "2bd3dccf56e99cdacf74b1ad5e06a08a5a7739f2",
                 "shasum": ""
             },
             "require": {
@@ -8517,7 +8552,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.13.4"
+                "source": "https://github.com/guzzle/psr7/tree/2.13.6"
             },
             "funding": [
                 {
@@ -8533,8 +8568,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-11-17T16:15:51+00:00",
-            "published-time": "2026-11-17T16:16:24+00:00"
+            "time": "2026-11-21T23:48:40+00:00",
+            "published-time": "2026-11-21T23:49:39+00:00"
         },
         {
             "name": "html2text/html2text",
@@ -8798,35 +8833,35 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "5.6.1",
+            "version": "5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "482760068e5a55a9045feddb3e2fc3f878cbd577"
+                "reference": "d7e47accd18c44268e1dcf01eec19f24d6904862"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/482760068e5a55a9045feddb3e2fc3f878cbd577",
-                "reference": "482760068e5a55a9045feddb3e2fc3f878cbd577",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/d7e47accd18c44268e1dcf01eec19f24d6904862",
+                "reference": "d7e47accd18c44268e1dcf01eec19f24d6904862",
                 "shasum": ""
             },
             "require": {
                 "ext-openssl": "*",
                 "ext-sodium": "*",
-                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "php": "~8.4.0 || ~8.5.0 || ~8.6.0",
                 "psr/clock": "^1.0"
             },
             "require-dev": {
-                "infection/infection": "^0.29",
-                "lcobucci/clock": "^3.2",
-                "lcobucci/coding-standard": "^11.0",
-                "phpbench/phpbench": "^1.2",
-                "phpstan/extension-installer": "^1.2",
-                "phpstan/phpstan": "^1.10.7",
-                "phpstan/phpstan-deprecation-rules": "^1.1.3",
-                "phpstan/phpstan-phpunit": "^1.3.10",
-                "phpstan/phpstan-strict-rules": "^1.5.0",
-                "phpunit/phpunit": "^11.1"
+                "infection/infection": "^0.35",
+                "lcobucci/clock": "^3.7",
+                "lcobucci/coding-standard": "^12.1",
+                "phpbench/phpbench": "^1.7",
+                "phpstan/extension-installer": "^1.4.3",
+                "phpstan/phpstan": "^2.3",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.1",
+                "phpstan/phpstan-strict-rules": "^2.1",
+                "phpunit/phpunit": "^13.4"
             },
             "suggest": {
                 "lcobucci/clock": ">= 3.2"
@@ -8855,7 +8890,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-                "source": "https://github.com/lcobucci/jwt/tree/5.6.1"
+                "source": "https://github.com/lcobucci/jwt/tree/5.7.0"
             },
             "funding": [
                 {
@@ -8867,8 +8902,8 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-10-10T09:42:14+00:00",
-            "published-time": "2026-10-10T09:43:25+00:00"
+            "time": "2026-11-19T21:02:34+00:00",
+            "published-time": "2026-11-19T21:06:03+00:00"
         },
         {
             "name": "league/container",
@@ -9015,26 +9050,26 @@
         },
         {
             "name": "league/oauth2-server",
-            "version": "9.4.1",
+            "version": "9.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-server.git",
-                "reference": "9d2f6fc0a0b5aa1bb02506971d3a4ecff2c6526c"
+                "reference": "afdb62ecc19bb13a855223465953ed4017a2d078"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/9d2f6fc0a0b5aa1bb02506971d3a4ecff2c6526c",
-                "reference": "9d2f6fc0a0b5aa1bb02506971d3a4ecff2c6526c",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/afdb62ecc19bb13a855223465953ed4017a2d078",
+                "reference": "afdb62ecc19bb13a855223465953ed4017a2d078",
                 "shasum": ""
             },
             "require": {
                 "defuse/php-encryption": "^2.4",
                 "ext-json": "*",
                 "ext-openssl": "*",
-                "lcobucci/jwt": "^5.6",
+                "lcobucci/jwt": "^5.6 || ^5.7",
                 "league/event": "^3.0",
                 "league/uri": "^7.8",
-                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0",
                 "psr/clock": "^1.0",
                 "psr/http-message": "^2.0",
                 "psr/http-server-middleware": "^1.0"
@@ -9044,7 +9079,7 @@
                 "lncd/oauth2": "*"
             },
             "require-dev": {
-                "laminas/laminas-diactoros": "^3.8",
+                "laminas/laminas-diactoros": "^3.8 || ^3.10",
                 "paragonie/random_compat": "^9.99.100",
                 "php-parallel-lint/php-parallel-lint": "^1.4",
                 "phpstan/extension-installer": "^1.4.3",
@@ -9100,7 +9135,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-server/issues",
-                "source": "https://github.com/thephpleague/oauth2-server/tree/9.4.1"
+                "source": "https://github.com/thephpleague/oauth2-server/tree/9.5.0"
             },
             "funding": [
                 {
@@ -9108,8 +9143,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-25T15:24:07+00:00",
-            "published-time": "2026-06-25T15:28:46+00:00"
+            "time": "2026-11-20T19:37:37+00:00",
+            "published-time": "2026-11-20T19:40:29+00:00"
         },
         {
             "name": "league/uri",
