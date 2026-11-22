@@ -1,12 +1,12 @@
 {
-    "_hash": "3ae18675b3a71ae8811c9d18e508f94bc6b9ca3819fe993d285c5a9675812e71",
+    "_hash": "7d6fcae6e15debf487b827c0d9c775015503ddeeb786af370b1de84b569debac",
     "patches": {
         "drupal/canvas": [
             {
                 "package": "drupal/canvas",
                 "description": "Name a layer after its label",
                 "url": "patches/canvas-layer-node-name.patch",
-                "sha256": "a43ed7bbbb342dcf1c22a56ab89ddbbb463b23767e4e86c8f49de3d21a773081",
+                "sha256": "5e931eb82395c7646ebf4cf2389d61f73d0d4c5d03eae6acaf75c1e8e07e99e8",
                 "depth": 1,
                 "extra": {
                     "provenance": "root"
