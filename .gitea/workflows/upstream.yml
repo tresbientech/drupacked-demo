@@ -58,6 +58,8 @@ jobs:
         env:
           RELEASE: ${{ inputs.release }}
         run: |
+          # A bumper that stops fails the step through the tee.
+          set -o pipefail
           version=$(python3 build/next-version.py)
           if [ "$RELEASE" = true ]; then
             branch=candidate/$version

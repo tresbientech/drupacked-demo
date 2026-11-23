@@ -34,6 +34,9 @@
         "drush/drush": "^13.6",
         "twig/twig": "3.29.0"
     },
+    "require-dev": {
+        "tresbientech/drupal-patch-check": "0.23.0"
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
@@ -44,7 +47,8 @@
             "drupal/core-project-message": true,
             "drupal/core-vendor-hardening": true,
             "php-http/discovery": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "tresbientech/drupal-patch-check": true
         },
         "sort-packages": true,
         "optimize-autoloader": true
@@ -63,6 +67,9 @@
             "drupal/ui_patterns": {
                 "Keep a zero string prop value": "patches/ui_patterns-zero-prop-value.patch"
             }
+        },
+        "drupal-patch-check": {
+            "patch-directory": "patches"
         },
         "drupal-scaffold": {
             "locations": {"web-root": "web/"},

@@ -5,9 +5,12 @@ what it did as a Markdown summary. It edits the working tree and never commits.
     python3 build/upstream.py
 """
 
+import atexit
+import functools
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -39,6 +42,9 @@ STABLE_TAG = re.compile(r"v\d+\.\d+\.\d+")
 HOLDS = {
     "twig/twig": "under 3.30 cron fails with a TypeError in easy_email's compiled template",
 }
+
+# The verdicts drupatch's service gives a patch.
+VERDICTS = {"applies", "merged", "conflicts", "unknown"}
 
 RELEASE = re.compile(r"v?(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)(\d+))?", re.IGNORECASE)
 STABILITY = {"alpha": 0, "beta": 1, "rc": 2, None: 3}
@@ -174,11 +180,157 @@ def newest_release(current, versions):
     return newest, max(above) if above else None
 
 
-def composer_update():
-    """Updates the lock with the pinned engine's Composer, which resolves against the PHP it carries."""
-    with tempfile.TemporaryDirectory() as directory:
-        subprocess.run([engine(directory), "composer", "update", "--no-install", "--no-interaction",
-                        "--no-progress", "--no-audit"], cwd=ROOT, check=True)
+@functools.cache
+def pinned_engine():
+    """The pinned engine, downloaded once per run into a directory removed at exit."""
+    directory = tempfile.mkdtemp()
+    atexit.register(shutil.rmtree, directory)
+    return engine(directory)
+
+
+# Composer options for a run nobody watches.
+QUIET = ("--no-interaction", "--no-progress")
+
+
+def composer_run(*arguments):
+    """Runs the pinned engine's Composer, which resolves against the PHP it carries. Its stdout goes to
+    stderr: the summary is the only stdout, and the release job commits it."""
+    subprocess.run([pinned_engine(), "composer", *arguments], cwd=ROOT, check=True, stdout=sys.stderr)
+
+
+def composer_update(*options):
+    composer_run("update", *options, "--no-install", *QUIET, "--no-audit")
+
+
+def drupatch_reroll(packages):
+    """drupatch's re-roll of the patches on `packages`: the JSON report it prints on stdout."""
+    return subprocess.run([pinned_engine(), "composer", "drupatch:reroll", "--format=json", "--no-interaction",
+                           *[f"--package={name}" for name in packages]],
+                          cwd=ROOT, stdout=subprocess.PIPE, text=True).stdout
+
+
+def pin_pattern(name):
+    """The line of `name`'s pin in composer.json, its value captured."""
+    return rf'^\s*"{re.escape(name)}": "([^"]+)"'
+
+
+def conflict_path(path):
+    """Where drupatch writes a re-roll that leaves regions to decide."""
+    return path.removesuffix(".patch") + ".conflict.patch"
+
+
+def outcome(row, written, refused):
+    """One patch's outcome from drupatch's report: `rerolled`, `dropped`, `kept`, or `held` with its reason."""
+    path, result = row["source"], row.get("result", {})
+    proposal = result.get("reroll", {})
+    # drupatch drops the declaration of every patch its release holds.
+    if row["verdict"] == "merged":
+        return "dropped", None
+    if written.get(path) == "clean" and proposal.get("verified") is True:
+        return "rerolled", None
+    # A refused overwrite names the file drupatch meant to write.
+    for target in (path, conflict_path(path)):
+        if target in refused:
+            return "held", refused[target]
+    if result.get("syntax_errors"):
+        return "held", f"broken syntax in {result['syntax_errors'][0]}"
+    if result.get("failure_mode"):
+        return "held", result["failure_mode"]
+    if result.get("fuzzy"):
+        return "held", "refused by 2.x"
+    if written.get(conflict_path(path)) == "conflicts":
+        regions = proposal.get("conflicts", [])
+        files = ", ".join(sorted({region.get("file", "") for region in regions}))
+        return "held", f"the re-roll leaves open regions in {files} ({len(regions)})"
+    if written.get(path) == "clean":
+        return "held", "the service did not verify the re-roll"
+    if row["verdict"] == "applies":
+        return "kept", None
+    return "held", result.get("error") or row["verdict"]
+
+
+def judge(declared, report, after):
+    """Each declared patch's outcome, by path. The report carries the service's answer: remote input."""
+    written = {entry["path"]: entry["status"] for entry in report["written"]}
+    refused = {entry["path"]: entry["reason"] for entry in report["refused"]}
+    rows = {row["source"]: row for row in report["plan"]["patches"]}
+    outcomes = {}
+    for name, patches in declared.items():
+        for path in patches.values():
+            row = rows.get(path)
+            if row is None or row["version"] != after[name]:
+                sys.exit(f"drupatch judged no {path} on {name} {after[name]}")
+            if row["verdict"] not in VERDICTS:
+                sys.exit(f"{path}: drupatch answered {row['verdict']!r}, not a verdict")
+            # drupatch points a declaration at the file it wrote when that file is not the declared one.
+            if row.get("result", {}).get("reroll", {}).get("path", path) not in (path, conflict_path(path)):
+                sys.exit(f"{path}: drupatch pointed its declaration at {row['result']['reroll']['path']}")
+            outcomes[path] = outcome(row, written, refused)
+        kinds = {outcomes[path][0] for path in patches.values()}
+        # A hold puts the package back on a release that still needs the patch drupatch dropped.
+        if {"dropped", "held"} <= kinds:
+            sys.exit(f"{name}: drupatch dropped one patch and could not re-roll another")
+    return outcomes
+
+
+def coupled(held, bumped, needs_before, needs_after):
+    """`held` and every package bumped this run that goes back with it: one a held package's old release
+    requires, or one whose new release requires a held package, until no more join."""
+    group = set(held)
+    while more := {name for name in bumped - group
+                   if needs_after[name] & group or any(name in needs_before[member] for member in group)}:
+        group |= more
+    return group
+
+
+def hold(summary, name, pin, patches, reasons, after):
+    """Puts `name` back on `pin` and notes each reason that holds it there."""
+    rewrite(COMPOSER, pin_pattern(name), pin)
+    summary.rows = [row for row in summary.rows if row[0] != name]
+    for path in patches.values():
+        (ROOT / conflict_path(path)).unlink(missing_ok=True)
+    summary.notes += [f"PATCH {name} {after[name]}: {reason}" for reason in reasons]
+
+
+def reroll(summary, declared, pins, bumped, before, after, needs_before, needs_after):
+    """Re-rolls the patches `declared` for each package whose locked version moved. A clean, verified
+    re-roll replaces its patch file, and a patch the release holds is deleted. Any other answer puts the
+    package back on its pin in `pins`, with every package bumped this run that depends on it either way."""
+    originals = {path: (ROOT / path).read_bytes() for patches in declared.values() for path in patches.values()}
+    composer_run("install", "--no-plugins", "--no-scripts", *QUIET)
+    # drupatch prints its report once the service answered, and nothing on stdout when it did not.
+    try:
+        report = json.loads(drupatch_reroll(declared))
+    except json.JSONDecodeError:
+        sys.exit("drupatch printed no report")
+    outcomes = judge(declared, report, after)
+    failed = {name for name, patches in declared.items() if any(outcomes[path][0] == "held" for path in patches.values())}
+    held = coupled(failed, bumped, needs_before, needs_after)
+    for name in held - failed:
+        if any(outcomes[path][0] == "dropped" for path in declared.get(name, {}).values()):
+            sys.exit(f"{name}: drupatch dropped its patch, and the hold of {', '.join(sorted(failed))} keeps it back")
+    done = set()
+    for name, patches in declared.items():
+        for path in patches.values():
+            kind = outcomes[path][0]
+            if kind == "dropped":
+                (ROOT / path).unlink()
+            elif kind != "rerolled" or name in held:
+                (ROOT / path).write_bytes(originals[path])
+                continue
+            summary.row(f"{name} {path}", before[name], after[name], kind)
+            done.add(kind)
+    for name in sorted(held):
+        patches = declared.get(name, {})
+        reasons = [f"{path}: {outcomes[path][1]}" for path in patches.values() if outcomes[path][0] == "held"]
+        hold(summary, name, pins[name], patches, reasons or [f"held with {', '.join(sorted(failed))}"], after)
+    # The drop edits composer.json, so the lock's content hash moves; a hold's full update refreshes it too.
+    if held:
+        composer_update()
+    elif "dropped" in done:
+        composer_update("--lock")
+    if done:
+        composer_run("patches-relock")
 
 
 def locked_versions():
@@ -186,8 +338,20 @@ def locked_versions():
     return {package["name"]: package["version"] for package in lock["packages"] + lock["packages-dev"]}
 
 
+def locked_requires():
+    """The packages each locked package requires, by name."""
+    lock = json.loads((ROOT / "composer.lock").read_text())
+    return {package["name"]: set(package.get("require", {})) for package in lock["packages"] + lock["packages-dev"]}
+
+
 def composer(summary):
-    for name, constraint in json.loads((ROOT / COMPOSER).read_text())["require"].items():
+    manifest = json.loads((ROOT / COMPOSER).read_text())
+    pins = {**manifest["require"], **manifest["require-dev"]}
+    for name in manifest["extra"]["patches"]:
+        if release_key(pins[name]) is None:
+            sys.exit(f"{name} carries a patch, so a hold needs an exact pin, not {pins[name]}")
+    bumped = set()
+    for name, constraint in pins.items():
         if name in HOLDS:
             newest = newest_release(constraint, releases(name))[0][1]
             summary.notes.append(f"HELD {name} {constraint} ({newest}): {HOLDS[name]}")
@@ -201,14 +365,19 @@ def composer(summary):
         if key <= release_key(constraint):
             summary.row(name, constraint, newest, "current")
             continue
-        rewrite(COMPOSER, rf'^\s*"{re.escape(name)}": "([^"]+)"', newest)
+        rewrite(COMPOSER, pin_pattern(name), newest)
         summary.row(name, constraint, newest, "bumped")
-    before = locked_versions()
+        bumped.add(name)
+    before, needs_before = locked_versions(), locked_requires()
     composer_update()
+    solved = locked_versions()
+    moved = {name: patches for name, patches in manifest["extra"]["patches"].items() if before[name] != solved[name]}
+    if moved:
+        reroll(summary, moved, pins, bumped, before, solved, needs_before, locked_requires())
     after = locked_versions()
-    bumped = {row[0] for row in summary.rows}
+    listed = {row[0] for row in summary.rows}
     for name in sorted(after):
-        if before.get(name) != after[name] and name not in bumped:
+        if before.get(name) != after[name] and name not in listed:
             summary.row(name, before.get(name, "none"), after[name], "locked")
 
 

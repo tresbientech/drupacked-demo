@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "444a0d93ed1f8ea65f275837f897926b",
+    "content-hash": "819e95d4c44b4e00b5d39d3c3e7216ac",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -15917,7 +15917,71 @@
             "published-time": "2023-08-29T11:47:53+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "tresbientech/drupal-patch-check",
+            "version": "v0.23.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tresbientech/drupal-patch-check.git",
+                "reference": "48b82dd2d450ef0119984fe2cb2450e567c7757a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tresbientech/drupal-patch-check/zipball/48b82dd2d450ef0119984fe2cb2450e567c7757a",
+                "reference": "48b82dd2d450ef0119984fe2cb2450e567c7757a",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.6",
+                "ext-json": "*",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "composer/composer": "^2.6",
+                "ergebnis/composer-normalize": "^2.52",
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "TresBienTech\\Drupatch\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "TresBienTech\\Drupatch\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Théodore Biadala",
+                    "homepage": "https://tresbien.tech"
+                }
+            ],
+            "description": "Checks whether a Drupal site's composer patches still apply, are already in the release, or need a re-roll.",
+            "homepage": "https://github.com/tresbientech/drupal-patch-check",
+            "keywords": [
+                "composer-plugin",
+                "drupal",
+                "patches",
+                "upgrade"
+            ],
+            "support": {
+                "issues": "https://github.com/tresbientech/drupal-patch-check/issues",
+                "source": "https://github.com/tresbientech/drupal-patch-check"
+            },
+            "time": "2026-10-17T16:13:10+00:00",
+            "published-time": "2026-10-17T16:14:33+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {

@@ -48,6 +48,8 @@ alone.
 - `recipes/drupacked_demo_site`, the recipe a first start installs
 - `agent-access.php`, the settings the generated `settings.php` requires last
 - `patches/`, applied by `cweagans/composer-patches`
+- `tresbientech/drupal-patch-check` in `require-dev`, which checks and re-rolls
+  those patches. Drupack builds with `--no-dev`, so the executable never holds it.
 - `tests/`, conformance cases the build runs after Drupack's own
 - `.github/workflows/build.yml`, which calls Drupack's `build.yml` at a Drupack tag
 - `build/upstream.py`, the bumper, with its tests beside it
@@ -95,8 +97,34 @@ releases from 1.
 - the Node release in `drupack.yml`, inside its major line
 - each exact Composer pin, inside its major line and at its stability or better
 - the lock, with that Drupack release's `drupack composer update`
+- each patch on a package whose locked version moved, with
+  `composer drupatch:reroll`
 
-It reports a new major and leaves it alone. `HOLDS` in the script names each
+The re-roll step installs the locked tree with plugins off, so no patch is
+applied, then asks drupatch about each patch. A patch that still applies stays
+as it is. A clean re-roll the service verified replaces the patch file, and
+`composer patches-relock` records its new hash. A patch the release already
+holds is deleted with its declaration. drupatch sends the patches to
+`api.tresbien.tech`.
+
+Any other answer holds the package: its pin goes back to the old release, its
+patch files keep their bytes, and the lock is updated again. Each package bumped
+in the same run that requires the held one, or that its old release requires,
+goes back with it. The summary gives
+a `PATCH` note with the patch and the reason. The next run tries the release
+again. To rebuild a held patch by hand, run `composer drupatch:reroll` in a
+checkout on the new release, then decide the open regions it leaves.
+
+A run stops, and the release job pushes nothing, when:
+
+- a patched package has no exact pin
+- drupatch prints no report
+- drupatch gives a verdict the bumper does not know
+- drupatch judged a moved patch on another release, or not at all
+- drupatch pointed a declaration at another file
+- a package that goes back holds a patch drupatch dropped
+
+The bumper reports a new major and leaves it alone. `HOLDS` in the script names each
 package kept at its pin, with the breakage a newer release brings.
 
 ```sh
@@ -111,17 +139,15 @@ gives its configuration.
 ## WordPal's patches
 
 The demo carries WordPal's Display Builder target, not installed. `patches/`
-holds the patches WordPal's usage guide names, copied from WordPal's `patches`
-directory:
+holds the patches WordPal's usage guide names. They started as copies of
+WordPal's `patches` directory, and the bumper re-rolls them when a release
+breaks one:
 
-- four for Display Builder and UI Patterns, which the Display Builder target needs
+- two for Display Builder and UI Patterns, which the Display Builder target needs
 - one for Canvas, which shows each layer's label in the Layers panel
 
 composer-patches applies them, and `patches.lock.json` records each one's
 SHA-256. Patches that dependencies declare stay unapplied.
-
-When WordPal changes its patches, copy them again and run
-`composer patches-relock`.
 
 ## License
 
