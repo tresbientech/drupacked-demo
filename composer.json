@@ -31,8 +31,7 @@
         "drupal/ui_patterns": "2.0.23",
         "drupal/ui_skins": "1.3.0",
         "drupal/wordpal": "1.0.0-alpha17",
-        "drush/drush": "^13.6",
-        "twig/twig": "3.29.0"
+        "drush/drush": "^13.6"
     },
     "require-dev": {
         "tresbientech/drupal-patch-check": "0.23.0"

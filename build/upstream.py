@@ -39,9 +39,7 @@ STABLE_TAG = re.compile(r"v\d+\.\d+\.\d+")
 
 # Exact pins the bumper leaves alone, each with the reason a newer release breaks
 # the site. Deleting an entry lets the next run bump the package.
-HOLDS = {
-    "twig/twig": "under 3.30 cron fails with a TypeError in easy_email's compiled template",
-}
+HOLDS = {}
 
 # The verdicts drupatch's service gives a patch.
 VERDICTS = {"applies", "merged", "conflicts", "unknown"}

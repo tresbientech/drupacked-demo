@@ -177,11 +177,15 @@ class Bumper(unittest.TestCase):
         self.assertEqual(self.pin(name, "require-dev"), "0.99.0")
 
     def test_a_held_package_is_reported_with_its_reason_and_left_alone(self):
-        self.serve_composer(**{"twig/twig": ["v4.0.0-alpha1", "v3.30.0", "v3.29.0"]})
+        name = "cweagans/composer-patches"
+        current = self.pin(name)
+        self.addCleanup(setattr, upstream, "HOLDS", upstream.HOLDS)
+        upstream.HOLDS = {name: "cron fails"}
+        self.serve_composer(**{name: ["3.0.0-alpha1", "2.99.0", current]})
         summary = self.run_bumper(upstream.composer)
-        self.assertEqual(self.pin("twig/twig"), "3.29.0")
-        self.assertIn(f"HELD twig/twig 3.29.0 (3.30.0): {upstream.HOLDS['twig/twig']}", summary.notes)
-        self.assertNotIn("twig/twig", [row[0] for row in summary.rows])
+        self.assertEqual(self.pin(name), current)
+        self.assertIn(f"HELD {name} {current} (2.99.0): cron fails", summary.notes)
+        self.assertNotIn(name, [row[0] for row in summary.rows])
 
     def test_composer_update_moves_the_lock_and_each_move_is_listed(self):
         self.serve_composer()
