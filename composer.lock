@@ -2005,6 +2005,14 @@
                     "homepage": "https://www.drupal.org/user/205645"
                 },
                 {
+                    "name": "spiderman",
+                    "homepage": "https://www.drupal.org/user/1631"
+                },
+                {
+                    "name": "star-szr",
+                    "homepage": "https://www.drupal.org/user/1167326"
+                },
+                {
                     "name": "tedbow",
                     "homepage": "https://www.drupal.org/user/240860"
                 },
@@ -2016,6 +2024,7 @@
             "description": "Drupal Automatic Updates",
             "homepage": "https://www.drupal.org/project/automatic_updates",
             "keywords": [
+                "Administration tools",
                 "Drupal"
             ],
             "support": {
@@ -5391,6 +5400,7 @@
             "description": "Allows you to add attributes to menu links.",
             "homepage": "http://drupal.org/project/menu_link_attributes",
             "keywords": [
+                "Administration tools",
                 "Drupal"
             ],
             "support": {
@@ -7232,17 +7242,17 @@
         },
         {
             "name": "drupal/trash",
-            "version": "3.1.2",
+            "version": "3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/trash.git",
-                "reference": "3.1.2"
+                "reference": "3.1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/trash-3.1.2.zip",
-                "reference": "3.1.2",
-                "shasum": "c25cf14a3b041bc7ed987c6069d5e06623081675"
+                "url": "https://ftp.drupal.org/files/projects/trash-3.1.3.zip",
+                "reference": "3.1.3",
+                "shasum": "a31520dc49bab8f0fa9764493d7d13f94c926741"
             },
             "require": {
                 "drupal/core": "^11.3.3 | ^12"
@@ -7251,8 +7261,8 @@
                 "drush/drush": "<12.5.1"
             },
             "require-dev": {
-                "amateescu/mago-drupal": "^0.5",
-                "carthage-software/mago": "^1.50",
+                "carthage-software/mago": "^1.58.1",
+                "drupal/mago": "^1.0@alpha",
                 "drupal/pathauto": "*",
                 "drupal/redirect": "*",
                 "drupal/search_api": "*",
@@ -7264,8 +7274,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.1.2",
-                    "datestamp": "1792828492",
+                    "version": "3.1.3",
+                    "datestamp": "1795715595",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7291,7 +7301,7 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/trash"
             },
-            "published-time": "2026-10-24T07:54:32+00:00"
+            "published-time": "2026-11-26T17:52:55+00:00"
         },
         {
             "name": "drupal/ui_patterns",
@@ -7627,6 +7637,10 @@
             ],
             "description": "Allows the users to see the contents of the password fields on selected forms before submission.",
             "homepage": "https://www.drupal.org/project/view_password",
+            "keywords": [
+                "Accessibility",
+                "Actively maintained"
+            ],
             "support": {
                 "source": "https://git.drupalcode.org/project/view_password"
             },
